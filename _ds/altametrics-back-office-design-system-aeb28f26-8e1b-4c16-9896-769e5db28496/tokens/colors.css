@@ -1,0 +1,107 @@
+/* ============================================================
+   Altametrics Back Office — Color Tokens
+   Sampled directly from product screenshots.
+   ============================================================ */
+:root {
+  /* --- Brand red (logo, Help, destructive/alert) --- */
+  --red-50:  #fdeaeb;
+  --red-100: #f7c4c7;
+  --red-500: #de202b;   /* primary Altametrics red */
+  --red-600: #c81d27;
+  --red-700: #a8161e;
+
+  /* --- Dark chrome (sidebar, top bar, tabs) --- */
+  --chrome-950: #1a1c26;
+  --chrome-900: #292b37;   /* sidebar + top bar background */
+  --chrome-800: #21232e;   /* active tab */
+  --chrome-700: #3a3c4a;
+  --chrome-600: #535562;   /* inactive tab text/hover */
+
+  /* --- Deep navy (section / module headers, e.g. "Start of Day") --- */
+  --navy-900: #0b0b3b;
+  --navy-800: #14144f;
+  --navy-700: #1e1e6b;
+
+  /* --- Blue (primary actions, links, GO button) --- */
+  --blue-50:  #e8f0f7;
+  --blue-100: #c3d9ec;
+  --blue-500: #2c6fad;   /* primary action / link */
+  --blue-600: #245d92;
+  --blue-700: #1c4a76;
+
+  /* --- Steel blue (flat module buttons: Cash & Sales, Forecast, ...) --- */
+  --steel-400: #6a90b3;
+  --steel-500: #4b6d90;   /* module button body (flat) */
+  --steel-600: #3a5675;   /* module button pressed */
+  --steel-700: #2c4259;
+  --navy-icon: #10253f;   /* dark icon square inside module buttons */
+
+  /* --- Green (success badges, completed tasks, status locks) --- */
+  --green-50:  #e9f6ea;
+  --green-500: #36b447;   /* task badge / locked-complete */
+  --green-400: #6ec358;   /* progress bar */
+  --green-600: #2c9a3c;
+
+  /* --- Purple (date / period selector) --- */
+  --purple-400: #7a6390;
+  --purple-700: #523f67;
+  --purple-900: #3f2a56;
+
+  /* --- KPI metric cards (gray gradient stack) --- */
+  --kpi-header: #737373;  /* title band */
+  --kpi-row-1:  #969696;  /* lighter value row */
+  --kpi-row-2:  #505050;  /* darker value row */
+
+  /* --- Amber / warning (negative variance highlight) --- */
+  --amber-500: #e6a700;
+  --warn-text: #c0392b;   /* negative / parenthesized figures */
+
+  /* --- Neutrals (surfaces, tables, borders, text) --- */
+  --white:     #ffffff;
+  --gray-50:   #f7f7f7;
+  --gray-100:  #f0f0f0;
+  --gray-150:  #ececec;   /* table header fill */
+  --gray-200:  #e2e2e2;
+  --gray-300:  #dddddd;   /* borders / rules */
+  --gray-400:  #c4c4c4;
+  --gray-500:  #9b9b9b;
+  --gray-600:  #6e6e6e;
+  --gray-700:  #4a4a4a;
+  --gray-800:  #333333;
+  --gray-900:  #1f1f1f;
+  --black:     #000000;   /* workflow connector lines */
+
+  /* ============================================================
+     Semantic aliases — prefer these in components.
+     ============================================================ */
+  --surface-app:        var(--gray-100);   /* outer app canvas */
+  --surface-content:    var(--white);      /* main content panel */
+  --surface-card:       var(--white);
+  --surface-rail:       var(--chrome-900); /* sidebar / topbar */
+  --surface-toolbar:    var(--gray-150);   /* filter / control strip */
+  --surface-table-head: var(--gray-150);
+  --surface-stripe:     var(--gray-50);
+
+  --border-default:     var(--gray-300);
+  --border-strong:      var(--gray-400);
+  --border-input:       var(--gray-400);
+
+  --text-primary:       var(--gray-900);
+  --text-secondary:     var(--gray-600);
+  --text-muted:         var(--gray-500);
+  --text-on-dark:       var(--white);
+  --text-link:          var(--blue-500);
+  --text-link-strong:   var(--blue-700);
+  --text-negative:      var(--warn-text);
+
+  --blue-action:        #015683;          /* GO / primary action button */
+  --blue-action-hov:    #01486e;
+  --action-primary:     var(--blue-action);
+  --action-primary-hov: var(--blue-action-hov);
+  --action-danger:      var(--red-500);
+  --action-danger-hov:  var(--red-600);
+
+  --status-success:     var(--green-500);
+  --status-progress:    var(--green-400);
+  --accent-brand:       var(--red-500);
+}

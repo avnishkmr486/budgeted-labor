@@ -1,0 +1,43 @@
+/* ============================================================
+   Altametrics Back Office — Typography Tokens
+   The product uses a classic web-safe sans stack (Arial /
+   Helvetica). No custom webfont ships with the app, so these
+   tokens reference system fonts for pixel-faithful output.
+   ============================================================ */
+:root {
+  /* --- Families --- */
+  --font-sans: Arial, "Helvetica Neue", Helvetica, "Segoe UI", sans-serif;
+  --font-mono: "Consolas", "SFMono-Regular", Menlo, Monaco, monospace;
+
+  /* Semantic family aliases */
+  --font-ui:      var(--font-sans);   /* labels, nav, buttons */
+  --font-body:    var(--font-sans);   /* body / table text */
+  --font-data:    var(--font-sans);   /* numeric figures (tabular) */
+  --font-heading: var(--font-sans);
+
+  /* --- Size scale (px-based, dense enterprise UI) --- */
+  --text-2xs: 10px;
+  --text-xs:  11px;   /* dense table cells, meta */
+  --text-sm:  12px;   /* default table body / labels */
+  --text-base:13px;   /* base UI text */
+  --text-md:  14px;   /* nav items, buttons */
+  --text-lg:  16px;   /* card values, sub-headers */
+  --text-xl:  18px;   /* section titles */
+  --text-2xl: 20px;   /* page / panel titles */
+  --text-3xl: 24px;   /* big metric figures */
+
+  /* --- Weights --- */
+  --weight-regular: 400;
+  --weight-medium:  600;
+  --weight-bold:    700;
+
+  /* --- Line heights --- */
+  --leading-tight:  1.15;
+  --leading-snug:   1.3;
+  --leading-normal: 1.45;
+
+  /* --- Letter spacing --- */
+  --tracking-tight:  -0.01em;
+  --tracking-normal: 0;
+  --tracking-wide:   0.02em;
+}

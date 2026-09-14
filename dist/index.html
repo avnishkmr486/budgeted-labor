@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Altametrics Back Office</title>
+
+<!-- Design-system tokens (Altametrics Back Office Design System) -->
+<link rel="stylesheet" href="vendor/ds/tokens/colors.css">
+<link rel="stylesheet" href="vendor/ds/tokens/typography.css">
+<link rel="stylesheet" href="vendor/ds/tokens/spacing.css">
+<link rel="stylesheet" href="vendor/ds/tokens/elevation.css">
+<link rel="stylesheet" href="vendor/ds/tokens/base.css">
+
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Mount point: app.js renders the template below into this element. -->
+<div id="app"></div>
+
+<!--
+  Application markup. Values written as {{ name }} come from the app's
+  renderVals(); <sc-for list="{{ items }}" as="item"> repeats its children and
+  <sc-if value="{{ flag }}"> includes them conditionally. Hover styling was
+  lifted to styles.css and is referenced here via data-hov="...".
+-->
+<template id="app-template">
+<div style="display:flex; flex-direction:column; height:100vh; min-height:640px; background:#ffffff; font-family:Arial, Helvetica, sans-serif; color:#1f1f1f; overflow:hidden; position:relative">
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="ic-home" viewBox="0 0 20 19"><g transform="translate(0.6,-4.213)"><path d="M18.058,13.528C18.206,13.367 18.287,13.157 18.287,12.939C18.287,12.686 18.178,12.446 17.987,12.28L9.814,5.129C9.43,4.806 8.862,4.812 8.485,5.144L0.285,12.661C0.104,12.825 0.001,13.059 0.001,13.303C0.001,13.528 0.089,13.745 0.246,13.907L0.452,14.121C0.771,14.471 1.315,14.513 1.683,14.215L2.296,13.666L2.296,21.7C2.296,22.189 2.699,22.592 3.188,22.592L6.388,22.592C6.877,22.592 7.28,22.189 7.28,21.7L7.28,16.081L11.357,16.081L11.357,21.7C11.356,21.716 11.356,21.733 11.356,21.749C11.356,22.21 11.734,22.59 12.195,22.592L15.583,22.592C16.072,22.592 16.475,22.189 16.475,21.7L16.475,13.78L16.853,14.112C17.061,14.295 17.499,14.148 17.831,13.783L18.063,13.528L18.058,13.528Z" fill="none" stroke="currentColor" stroke-width="1.2"></path></g></symbol>
+    <symbol id="ic-cash" viewBox="0 0 24 24"><rect x="2.2" y="6.6" width="19.6" height="11" rx="2.6" fill="none" stroke="currentColor" stroke-width="1.4"></rect><circle cx="12" cy="12.1" r="2.3" fill="none" stroke="currentColor" stroke-width="1.4"></circle><circle cx="6.2" cy="12.1" r="1" fill="currentColor"></circle><circle cx="17.8" cy="12.1" r="1" fill="currentColor"></circle></symbol>
+    <symbol id="ic-food" viewBox="0 0 24 24"><g stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><g transform="rotate(-30 12 12)"><path d="M8 2.4v4.2M12 2.4v4.2M16 2.4v4.2"></path><path d="M8 6.6h8c0 2.2-1.4 3.4-3 3.7v11.3h-2V10.3c-1.6-.3-3-1.5-3-3.7z"></path></g><g transform="rotate(30 12 12)"><path d="M14.6 2.4c2.4 2.2 2.8 7.4.6 9.6h-1.4v9.6h-2V4.9c0-1.2 1.2-2.2 2.8-2.5z"></path></g></g></symbol>
+    <symbol id="ic-labor" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="12" cy="8.6" r="3.4"></circle><path d="M5.6 10.6a6.4 6.4 0 0 1 12.8 0"></path><rect x="3.6" y="9.9" width="2.6" height="3.6" rx="1"></rect><rect x="17.8" y="9.9" width="2.6" height="3.6" rx="1"></rect><path d="M4.6 21.4a7.4 7.4 0 0 1 14.8 0"></path></g></symbol>
+    <symbol id="ic-report" viewBox="0 0 20 20"><g transform="translate(-0.765,0)" fill="currentColor"><path d="M14.581,8.585L14.402,8.565L14.402,4.07C14.403,3.962 14.361,3.857 14.284,3.781L10.621,0.118C10.543,0.043 10.439,0.001 10.331,-0L2.089,0C1.364,0.001 0.767,0.598 0.766,1.323L0.766,17.2C0.769,17.924 1.365,18.519 2.089,18.52L11.475,18.52L11.569,18.54C12.32,18.929 13.154,19.132 14,19.132C16.901,19.132 19.288,16.745 19.288,13.844C19.288,11.162 17.247,8.883 14.581,8.588L14.581,8.585ZM10.738,1.385L13.013,3.66L10.738,3.66L10.738,1.385ZM2.089,17.706C1.811,17.706 1.582,17.478 1.58,17.2L1.58,1.323C1.58,1.044 1.81,0.814 2.089,0.814L9.925,0.814L9.925,4.07C9.926,4.293 10.109,4.476 10.332,4.477L13.588,4.477L13.588,8.564L13.409,8.584C10.745,8.875 8.704,11.152 8.704,13.832C8.704,15.138 9.188,16.398 10.063,17.368L10.368,17.706L2.089,17.706ZM17.951,15.931C17.178,17.397 15.651,18.318 13.993,18.318C11.538,18.318 9.518,16.298 9.518,13.843C9.518,12.152 10.476,10.6 11.988,9.842L12.196,9.736L13.608,13.969C13.647,14.087 13.739,14.18 13.856,14.221L18.056,15.721L17.951,15.931ZM18.338,14.958L14.317,13.521L12.969,9.48L13.201,9.435C13.463,9.386 13.729,9.362 13.995,9.362C16.45,9.364 18.47,11.384 18.472,13.839C18.473,14.137 18.443,14.434 18.382,14.726L18.338,14.958Z"></path><path d="M8.346,8.437L3.218,8.437C2.877,8.437 2.596,8.718 2.596,9.059C2.596,9.4 2.877,9.681 3.218,9.681L8.346,9.681C8.687,9.681 8.968,9.4 8.968,9.059C8.968,8.718 8.687,8.437 8.346,8.437ZM8.346,4.446L3.218,4.446C2.877,4.446 2.596,4.727 2.596,5.068C2.596,5.409 2.877,5.69 3.218,5.69L8.346,5.69C8.687,5.69 8.968,5.409 8.968,5.068C8.968,4.727 8.687,4.446 8.346,4.446Z"></path></g></symbol>
+    <symbol id="ic-admin" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="9.8" cy="7.2" r="3.7"></circle><path d="M2.8 20.2c0-3.9 3.1-6.6 7-6.6 1 0 1.9.2 2.7.5"></path><circle cx="17.6" cy="17.4" r="2.6"></circle><path d="M17.6 13.2v1.1M17.6 20.5v1.1M21.2 15.3l-1 .6M14 18.9l-1 .6M21.2 19.5l-1-.6M14 15.9l-1-.6"></path></g></symbol>
+    <symbol id="ic-help" viewBox="0 0 24 24"><g transform="translate(-24.7,-14.129)" fill="currentColor"><path d="M42.538,16.6H30.765A3.071,3.071,0,0,0,27.7,19.665V34.981a.672.672,0,0,0,.405.618.7.7,0,0,0,.27.057.684.684,0,0,0,.462-.182l3.05-2.868H42.538A3.071,3.071,0,0,0,45.6,29.542V19.665A3.071,3.071,0,0,0,42.538,16.6Zm1.714,12.942a1.716,1.716,0,0,1-1.714,1.714H31.623a.69.69,0,0,0-.462.182l-2.109,1.979V19.665a1.716,1.716,0,0,1,1.714-1.714H42.538a1.716,1.716,0,0,1,1.714,1.714Zm-7.045-1.5a.922.922,0,0,1-.01,1.283.913.913,0,0,1-.618.239.948.948,0,0,1-.634-.234.814.814,0,0,1-.27-.655.855.855,0,0,1,.26-.629.874.874,0,0,1,.639-.255A.842.842,0,0,1,37.208,28.045Zm2.052-6.276a2.115,2.115,0,0,1,.358,1.185,1.847,1.847,0,0,1-.2.883,2.505,2.505,0,0,1-.488.655c-.192.182-.525.494-1.013.93a3.73,3.73,0,0,0-.322.322A1.312,1.312,0,0,0,37.41,26a1.1,1.1,0,0,0-.094.234c-.021.078-.052.213-.1.405a.661.661,0,0,1-.707.618.717.717,0,0,1-.52-.2.791.791,0,0,1-.213-.6,2.185,2.185,0,0,1,.156-.862,2.141,2.141,0,0,1,.41-.639q.257-.273.686-.655c.255-.223.436-.39.551-.5a1.787,1.787,0,0,0,.286-.374.914.914,0,0,0,.114-.452,1.052,1.052,0,0,0-.353-.8,1.285,1.285,0,0,0-.909-.327,1.266,1.266,0,0,0-.961.327,2.531,2.531,0,0,0-.52.972q-.2.67-.764.67a.749.749,0,0,1-.561-.234.727.727,0,0,1-.229-.509,2.127,2.127,0,0,1,.364-1.143,2.743,2.743,0,0,1,1.055-.956,3.307,3.307,0,0,1,1.621-.379,3.429,3.429,0,0,1,1.517.317A2.4,2.4,0,0,1,39.26,21.769Z"></path></g></symbol>
+    <symbol id="ic-chevron" viewBox="0 0 16 16"><path d="M3.5 6 8 10.5 12.5 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></symbol>
+    <symbol id="ic-workflowtab" viewBox="0 0 20 20"><g fill="currentColor"><rect x="8.4" y="2" width="3.2" height="3.2" rx="0.5"></rect><rect x="1.6" y="12.6" width="3.2" height="3.2" rx="0.5"></rect><rect x="8.4" y="12.6" width="3.2" height="3.2" rx="0.5"></rect><rect x="15.2" y="12.6" width="3.2" height="3.2" rx="0.5"></rect><path d="M9.4 5.4h1.2v3.2H9.4z"></path><path d="M3.2 8.6h13.6v1.2H3.2z"></path><path d="M3.2 9.2h1.2v3.4H3.2zM9.4 9.2h1.2v3.4H9.4zM15.6 9.2h1.2v3.4h-1.2z"></path></g></symbol>
+    <symbol id="ic-shortcuts" viewBox="0 0 20 20"><path d="M3 15.5C3 9.6 7.2 6.4 13.6 6.3M10.6 2.6l4 3.7-4 3.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></symbol>
+    <symbol id="ic-summary" viewBox="0 0 20 20"><g fill="currentColor"><rect x="1.6" y="3.4" width="3.2" height="2.4" rx="0.4"></rect><rect x="6.4" y="3.4" width="12" height="2.4" rx="0.4"></rect><rect x="1.6" y="8.8" width="3.2" height="2.4" rx="0.4"></rect><rect x="6.4" y="8.8" width="12" height="2.4" rx="0.4"></rect><rect x="1.6" y="14.2" width="3.2" height="2.4" rx="0.4"></rect><rect x="6.4" y="14.2" width="12" height="2.4" rx="0.4"></rect></g></symbol>
+    <symbol id="ic-search" viewBox="0 0 20 20"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="8.6" cy="8.6" r="5.6"></circle><path d="M12.8 12.8 17.4 17.4"></path></g></symbol>
+    <symbol id="ic-apps" viewBox="0 0 20 20"><g fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.2" y="2.2" width="6.2" height="6.2" rx="0.8"></rect><rect x="11.6" y="2.2" width="6.2" height="6.2" rx="0.8"></rect><rect x="2.2" y="11.6" width="6.2" height="6.2" rx="0.8"></rect><rect x="11.6" y="11.6" width="6.2" height="6.2" rx="0.8"></rect></g></symbol>
+    <symbol id="ic-bell" viewBox="0 0 20 20"><path d="M10 2.2a4.9 4.9 0 0 0-4.9 4.9c0 3.6-1.3 4.9-1.9 5.5-.3.3-.1.9.4.9h12.8c.5 0 .7-.6.4-.9-.6-.6-1.9-1.9-1.9-5.5A4.9 4.9 0 0 0 10 2.2zM8.2 15.6a1.9 1.9 0 0 0 3.6 0z" fill="currentColor"></path></symbol>
+    <symbol id="ic-user" viewBox="0 0 24 24"><g fill="currentColor"><circle cx="12" cy="12" r="11"></circle></g><g fill="#292b37"><circle cx="12" cy="9.4" r="3.4"></circle><path d="M5.6 20.4a6.4 6.4 0 0 1 12.8 0z"></path></g></symbol>
+    <symbol id="ic-refresh" viewBox="0 0 20 20"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M16.4 8.2A6.6 6.6 0 0 0 4.4 6.1"></path><path d="M3.6 11.8a6.6 6.6 0 0 0 12 2.1"></path><path d="M16.8 3.6v4.6h-4.6M3.2 16.4v-4.6h4.6"></path></g></symbol>
+    <symbol id="ic-hat" viewBox="0 0 32 32"><g fill="#ffffff"><path d="M16 5.4c-3.2 0-5.6 2.6-5.9 6.2h11.8c-.3-3.6-2.7-6.2-5.9-6.2z"></path><rect x="3.8" y="12.2" width="24.4" height="3.6" rx="1.6"></rect><path d="M8.2 17.2c0 5.1 3.4 9 7.8 9s7.8-3.9 7.8-9z"></path></g></symbol>
+    <symbol id="wf-done" viewBox="0 0 78 38"><path d="M5 1.5H27L45 19 27 36.5H5A3.5 3.5 0 0 1 1.5 33V5A3.5 3.5 0 0 1 5 1.5Z" fill="#3cb54a"></path><circle cx="17" cy="11.2" r="4.3" fill="none" stroke="#ffffff" stroke-width="1.8"></circle><path d="M17 8.9v2.4l1.7 1.1" fill="none" stroke="#ffffff" stroke-width="1.3" stroke-linecap="round"></path><circle cx="17" cy="22.4" r="3.7" fill="#ffffff"></circle><path d="M10.4 32.2c0-3.7 3-6.4 6.6-6.4s6.6 2.7 6.6 6.4z" fill="#ffffff"></path><path d="M36 1.5H58L74 19 58 36.5H36L48 19Z" fill="#3cb54a" stroke="#ffffff" stroke-width="3" stroke-linejoin="round"></path><path d="M51 20 56 25.5 66 13.5" fill="none" stroke="#ffffff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"></path></symbol>
+    <symbol id="wf-pending" viewBox="0 0 78 38"><path d="M5 1.5H27L45 19 27 36.5H5A3.5 3.5 0 0 1 1.5 33V5A3.5 3.5 0 0 1 5 1.5Z" fill="#f5871f"></path><circle cx="17" cy="11.2" r="4.3" fill="none" stroke="#ffffff" stroke-width="1.8"></circle><path d="M17 8.9v2.4l1.7 1.1" fill="none" stroke="#ffffff" stroke-width="1.3" stroke-linecap="round"></path><circle cx="17" cy="22.4" r="3.7" fill="#ffffff"></circle><path d="M10.4 32.2c0-3.7 3-6.4 6.6-6.4s6.6 2.7 6.6 6.4z" fill="#ffffff"></path><path d="M36 1.5H58L74 19 58 36.5H36L48 19Z" fill="#f5871f" stroke="#ffffff" stroke-width="3" stroke-linejoin="round"></path><circle cx="58" cy="19" r="8.8" fill="#f5871f" stroke="#ffffff" stroke-width="2"></circle></symbol>
+    <symbol id="ic-grid" viewBox="0 0 20 20"><g fill="currentColor"><rect x="1.6" y="1.6" width="4.6" height="4.6" rx="0.6"></rect><rect x="7.7" y="1.6" width="4.6" height="4.6" rx="0.6"></rect><rect x="13.8" y="1.6" width="4.6" height="4.6" rx="0.6"></rect><rect x="1.6" y="7.7" width="4.6" height="4.6" rx="0.6"></rect><rect x="7.7" y="7.7" width="4.6" height="4.6" rx="0.6"></rect><rect x="13.8" y="7.7" width="4.6" height="4.6" rx="0.6"></rect><rect x="1.6" y="13.8" width="4.6" height="4.6" rx="0.6"></rect><rect x="7.7" y="13.8" width="4.6" height="4.6" rx="0.6"></rect><rect x="13.8" y="13.8" width="4.6" height="4.6" rx="0.6"></rect></g></symbol>
+    <symbol id="ic-stats" viewBox="0 0 22 20"><rect x="1" y="2.4" width="20" height="15.2" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.6"></rect><path d="M4.6 13.6 8.6 8.8l3.2 3 4.8-5.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></symbol>
+    <symbol id="ic-matrix" viewBox="0 0 22 20"><g fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="2.4" width="20" height="15.2" rx="1.4"></rect><path d="M1 7.2h20M1 12.4h20M7.6 2.4v15.2M14.2 2.4v15.2"></path></g></symbol>
+    <symbol id="ic-jobcode" viewBox="0 0 24 20"><g fill="currentColor"><circle cx="11.6" cy="4.6" r="3"></circle><path d="M5.6 12.4c0-2.6 2.7-4.4 6-4.4s6 1.8 6 4.4z"></path><circle cx="4" cy="8.4" r="2.4"></circle><path d="M0 15c0-2.1 1.8-3.6 4-3.6.8 0 1.5.2 2.1.5-1 .8-1.6 1.9-1.6 3.1z"></path><circle cx="19.2" cy="8.4" r="2.4"></circle><path d="M23.2 15c0-2.1-1.8-3.6-4-3.6-.8 0-1.5.2-2.1.5 1 .8 1.6 1.9 1.6 3.1z"></path><rect x="6.6" y="16.4" width="10" height="2.2" rx="1.1"></rect></g></symbol>
+    <symbol id="ic-jobdept" viewBox="0 0 22 20"><g fill="currentColor"><circle cx="3" cy="4" r="2"></circle><circle cx="3" cy="10" r="2"></circle><circle cx="3" cy="16" r="2"></circle><rect x="7.4" y="2.2" width="14" height="1.8" rx="0.9"></rect><rect x="7.4" y="5.2" width="10" height="1.8" rx="0.9"></rect><rect x="7.4" y="9.2" width="14" height="1.8" rx="0.9"></rect><rect x="7.4" y="12.2" width="10" height="1.8" rx="0.9"></rect><rect x="7.4" y="15.2" width="14" height="1.8" rx="0.9"></rect></g></symbol>
+    <symbol id="ic-backup" viewBox="0 0 22 22"><g fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="3.2"></circle><path d="M17.6 13.2a7 7 0 0 0 0-4.4l1.9-1.4-2-3.4-2.2 1a7 7 0 0 0-3.8-2.2L11 .5H7.9l-.5 2.3a7 7 0 0 0-2.2.9"></path><path d="M4.4 8.8a7 7 0 0 0 0 4.4l-1.9 1.4 2 3.4 2.2-1a7 7 0 0 0 3.8 2.2l.5 2.3h3.1l.5-2.3"></path></g></symbol>
+    <symbol id="ic-save" viewBox="0 0 20 20"><g fill="currentColor"><path d="M2 2h13.2L18 4.8V18H2z" opacity="0"></path><path d="M2.6 1.6h12.2l3.6 3.6v13.2H1.6V1.6zm2.8 1v4.8h8.4V2.6zm-1.6 8.6v6.2h11.6v-6.2z" ></path><rect x="10.6" y="3.2" width="2" height="3.2" fill="#0e5b86"></rect></g></symbol>
+    <symbol id="ic-warn" viewBox="0 0 22 22"><circle cx="11" cy="11" r="9.4" fill="none" stroke="currentColor" stroke-width="1.6"></circle><rect x="10.1" y="5.6" width="1.8" height="7" rx="0.9" fill="currentColor"></rect><circle cx="11" cy="15.6" r="1.1" fill="currentColor"></circle></symbol>
+    <symbol id="ic-clock" viewBox="0 0 22 22"><circle cx="11" cy="11" r="9.4" fill="none" stroke="currentColor" stroke-width="1.6"></circle><path d="M11 5.8V11l4 2.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path></symbol>
+    <symbol id="ic-cal" viewBox="0 0 18 18"><g fill="none" stroke="currentColor" stroke-width="1.4"><rect x="1.6" y="3" width="14.8" height="13.4" rx="1.6"></rect><path d="M1.6 7h14.8M5.4 1.4v3M12.6 1.4v3"></path></g></symbol>
+    <symbol id="ic-filter" viewBox="0 0 20 20"><path d="M2 3.4h16L11.6 11v5.4l-3.2-2V11z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"></path></symbol>
+    <symbol id="ic-sort" viewBox="0 0 20 20"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v14M3 6l3-3 3 3M14 17V3M11 14l3 3 3-3"></path></g></symbol>
+    <symbol id="ic-bars" viewBox="0 0 20 20"><g fill="currentColor"><rect x="2.4" y="10" width="3.6" height="7.6"></rect><rect x="8.2" y="5.4" width="3.6" height="12.2"></rect><rect x="14" y="2.4" width="3.6" height="15.2"></rect></g></symbol>
+    <symbol id="ic-caret" viewBox="0 0 12 12"><path d="M2 4.4 6 8.4 10 4.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></symbol>
+  </svg>
+
+  <!-- ============ TOP BAR ============ -->
+  <div style="display:flex; align-items:stretch; height:50px; flex:0 0 50px; background:#292b37; position:relative; z-index:30; overflow:hidden">
+    <button type="button" onClick="{{ toggleNav }}" style="width:54px; flex:0 0 54px; border:none; background:#292b37; color:#ffffff; cursor:pointer; display:flex; align-items:center; justify-content:center; padding:0" data-hov="h1">
+      <svg width="24" height="18" viewBox="0 0 24 18" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round"><path d="M1.5 1.5h21M1.5 9h21M1.5 16.5h21"></path></svg>
+    </button>
+    <div style="flex:1 1 auto; min-width:0; overflow-x:auto; overflow-y:hidden; display:flex; align-items:stretch">
+    <sc-if value="{{ isWorkflow }}">
+      <div style="display:flex; align-items:stretch">
+        <button type="button" style="display:flex; align-items:center; gap:9px; padding:0 22px; border:none; cursor:pointer; background:transparent; color:#8b8e9b; font-family:Arial, Helvetica, sans-serif; font-size:15px; font-weight:700" data-hov="h2">
+          <svg width="20" height="20" style="color:#8b8e9b"><use href="#ic-workflowtab"></use></svg>My Workflow
+        </button>
+        <button type="button" style="display:flex; align-items:center; gap:9px; padding:0 22px; border:none; cursor:pointer; background:transparent; color:#8b8e9b; font-family:Arial, Helvetica, sans-serif; font-size:15px; font-weight:700" data-hov="h2">
+          <svg width="20" height="20" style="color:#8b8e9b"><use href="#ic-shortcuts"></use></svg>Shortcuts
+        </button>
+        <button type="button" style="display:flex; align-items:center; gap:9px; padding:0 22px; border:none; cursor:pointer; background:transparent; color:#8b8e9b; font-family:Arial, Helvetica, sans-serif; font-size:15px; font-weight:700" data-hov="h2">
+          <svg width="20" height="20" style="color:#8b8e9b"><use href="#ic-summary"></use></svg>Summary
+        </button>
+      </div>
+    </sc-if>
+    <sc-if value="{{ isWsched }}">
+      <div style="display:flex; align-items:stretch">
+        <button type="button" style="display:flex; align-items:center; gap:8px; padding:0 18px; border:none; cursor:pointer; white-space:nowrap; background:transparent; color:#e6e8ee; font-family:Arial, Helvetica, sans-serif; font-size:15px" data-hov="h1">
+          Action <svg width="12" height="12" style="color:#e6e8ee"><use href="#ic-caret"></use></svg>
+        </button>
+        <button type="button" style="display:flex; align-items:center; gap:9px; padding:0 18px; border:none; cursor:pointer; white-space:nowrap; background:transparent; color:#ffffff; font-family:Arial, Helvetica, sans-serif; font-size:15px; font-weight:400" data-hov="h1">
+          <svg width="20" height="20" style="color:#ffffff; flex:0 0 20px"><use href="#ic-report"></use></svg>
+          <span style="display:flex; flex-direction:column; align-items:flex-start; line-height:1.15">Audit Trail</span>
+        </button>
+        <button type="button" style="display:flex; align-items:center; gap:9px; padding:0 18px; border:none; cursor:pointer; white-space:nowrap; background:transparent; color:#ffffff; font-family:Arial, Helvetica, sans-serif; font-size:15px; font-weight:400" data-hov="h1">
+          <svg width="20" height="20" style="color:#ffffff; flex:0 0 20px"><use href="#ic-grid"></use></svg>
+          <span style="display:flex; flex-direction:column; align-items:flex-start; line-height:1.15">Dashboard</span>
+        </button>
+        <button type="button" style="display:flex; align-items:center; gap:9px; padding:0 18px; border:none; cursor:pointer; white-space:nowrap; background:transparent; color:#ffffff; font-family:Arial, Helvetica, sans-serif; font-size:15px; font-weight:400" data-hov="h1">
+          <svg width="20" height="20" style="color:#ffffff; flex:0 0 20px"><use href="#ic-report"></use></svg>
+          <span style="display:flex; flex-direction:column; align-items:flex-start; line-height:1.15">Reports</span>
+        </button>
+        <button type="button" style="display:flex; align-items:center; gap:9px; padding:0 18px; border:none; cursor:pointer; white-space:nowrap; background:transparent; color:#ffffff; font-family:Arial, Helvetica, sans-serif; font-size:15px; font-weight:400" data-hov="h1">
+          <svg width="20" height="20" style="color:#ffffff; flex:0 0 20px"><use href="#ic-labor"></use></svg>
+          <span style="display:flex; flex-direction:column; align-items:flex-start; line-height:1.15">Store Shifts</span>
+        </button>
+        <button type="button" style="display:flex; align-items:center; gap:9px; padding:0 18px; border:none; cursor:pointer; white-space:nowrap; background:#20232e; color:#ffffff; font-family:Arial, Helvetica, sans-serif; font-size:15px; font-weight:700" data-hov="h1">
+          <svg width="20" height="20" style="color:#ffffff; flex:0 0 20px"><use href="#ic-stats"></use></svg>
+          <span style="display:flex; flex-direction:column; align-items:flex-start; line-height:1.15">Analysis<span style="font-size:11.5px; font-weight:400; color:#c3c8d3">14.28% - OT 0:00</span></span>
+        </button>
+        <button type="button" style="display:flex; align-items:center; gap:9px; padding:0 18px; border:none; cursor:pointer; white-space:nowrap; background:transparent; color:#ffffff; font-family:Arial, Helvetica, sans-serif; font-size:15px; font-weight:400" data-hov="h1">
+          <svg width="20" height="20" style="color:#ffffff; flex:0 0 20px"><use href="#ic-warn"></use></svg>
+          <span style="display:flex; flex-direction:column; align-items:flex-start; line-height:1.15">Warnings<span style="font-size:11.5px; font-weight:400; color:#c3c8d3">24 Alerts</span></span>
+        </button>
+        <button type="button" style="display:flex; align-items:center; gap:9px; padding:0 18px; border:none; cursor:pointer; white-space:nowrap; background:transparent; color:#ffffff; font-family:Arial, Helvetica, sans-serif; font-size:15px; font-weight:400" data-hov="h1">
+          <svg width="20" height="20" style="color:#ffffff; flex:0 0 20px"><use href="#ic-clock"></use></svg>
+          <span style="display:flex; flex-direction:column; align-items:flex-start; line-height:1.15">Time Off<span style="font-size:11.5px; font-weight:400; color:#c3c8d3">(0)</span></span>
+        </button>
+        <button type="button" style="display:flex; align-items:center; gap:9px; padding:0 18px; border:none; cursor:pointer; white-space:nowrap; background:transparent; color:#ffffff; font-family:Arial, Helvetica, sans-serif; font-size:15px; font-weight:400" data-hov="h1">
+          <svg width="20" height="20" style="color:#ffffff; flex:0 0 20px"><use href="#ic-jobcode"></use></svg>
+          <span style="display:flex; flex-direction:column; align-items:flex-start; line-height:1.15">Disassociated Shifts</span>
+        </button>
+        <span style="display:flex; align-items:center; padding:0 14px; color:#c3c8d3; font-size:26px; font-weight:300">&#10095;</span>
+      </div>
+    </sc-if>
+    <sc-if value="{{ isLbu }}">
+      <div style="display:flex; align-items:stretch">
+        <sc-for list="{{ lbuTabs }}" as="t">
+          <button type="button" onClick="{{ t.onClick }}" style="{{ t.style }}">
+            <sc-if value="{{ t.is_grid }}"><svg width="20" height="20" style="color:#ffffff;flex:0 0 20px"><use href="#ic-grid"></use></svg></sc-if>
+            <sc-if value="{{ t.is_stats }}"><svg width="22" height="20" style="color:#ffffff;flex:0 0 22px"><use href="#ic-stats"></use></svg></sc-if>
+            <sc-if value="{{ t.is_report }}"><svg width="20" height="20" style="color:#ffffff;flex:0 0 20px"><use href="#ic-report"></use></svg></sc-if>
+            {{ t.label }}
+          </button>
+        </sc-for>
+      </div>
+    </sc-if>
+    <sc-if value="{{ isMlmu }}">
+      <div style="display:flex; align-items:stretch">
+        <button type="button" style="display:flex; align-items:center; gap:8px; padding:0 20px; border:none; cursor:pointer; background:transparent; color:#e6e8ee; font-family:Arial, Helvetica, sans-serif; font-size:15.5px; font-weight:400" data-hov="h1">
+          Action <svg width="12" height="12" style="color:#e6e8ee"><use href="#ic-caret"></use></svg>
+        </button>
+        <sc-for list="{{ mlmuTabs }}" as="t">
+          <button type="button" onClick="{{ t.onClick }}" style="{{ t.style }}">
+            <sc-if value="{{ t.is_stats }}"><svg width="22" height="20" style="color:#ffffff;flex:0 0 22px"><use href="#ic-stats"></use></svg></sc-if>
+            <sc-if value="{{ t.is_matrix }}"><svg width="22" height="20" style="color:#ffffff;flex:0 0 22px"><use href="#ic-matrix"></use></svg></sc-if>
+            <sc-if value="{{ t.is_jobcode }}"><svg width="22" height="20" style="color:#ffffff;flex:0 0 22px"><use href="#ic-jobcode"></use></svg></sc-if>
+            <sc-if value="{{ t.is_jobdept }}"><svg width="22" height="20" style="color:#ffffff;flex:0 0 22px"><use href="#ic-jobdept"></use></svg></sc-if>
+            <sc-if value="{{ t.is_backup }}"><svg width="22" height="20" style="color:#ffffff;flex:0 0 22px"><use href="#ic-backup"></use></svg></sc-if>
+            <sc-if value="{{ t.is_report }}"><svg width="20" height="20" style="color:#ffffff;flex:0 0 20px"><use href="#ic-report"></use></svg></sc-if>
+            {{ t.label }}
+          </button>
+        </sc-for>
+      </div>
+    </sc-if>
+    <sc-if value="{{ showGridTab }}">
+      <div style="display:flex; align-items:stretch">
+        <span style="display:flex; align-items:center; gap:10px; padding:0 22px; background:#292b37; color:#f2f2f0; font-size:16px; font-weight:700">
+          <svg width="21" height="21" style="color:#f2f2f0"><use href="#ic-grid"></use></svg>Grid
+        </span>
+      </div>
+    </sc-if>
+    <sc-if value="{{ isDetail }}">
+      <div style="display:flex; align-items:stretch">
+        <button type="button" style="display:flex; align-items:center; gap:8px; padding:0 20px; border:none; cursor:pointer; background:transparent; color:#e6e8ee; font-family:Arial, Helvetica, sans-serif; font-size:15.5px; font-weight:400" data-hov="h1">
+          Action <svg width="12" height="12" style="color:#e6e8ee"><use href="#ic-caret"></use></svg>
+        </button>
+        <sc-for list="{{ detailTabs }}" as="t">
+          <button type="button" onClick="{{ t.onClick }}" style="{{ t.style }}">
+            <sc-if value="{{ t.is_stats }}"><svg width="22" height="20" style="color:#ffffff;flex:0 0 22px"><use href="#ic-stats"></use></svg></sc-if>
+            <sc-if value="{{ t.is_matrix }}"><svg width="22" height="20" style="color:#ffffff;flex:0 0 22px"><use href="#ic-matrix"></use></svg></sc-if>
+            <sc-if value="{{ t.is_jobcode }}"><svg width="22" height="20" style="color:#ffffff;flex:0 0 22px"><use href="#ic-jobcode"></use></svg></sc-if>
+            <sc-if value="{{ t.is_jobdept }}"><svg width="22" height="20" style="color:#ffffff;flex:0 0 22px"><use href="#ic-jobdept"></use></svg></sc-if>
+            <sc-if value="{{ t.is_backup }}"><svg width="22" height="20" style="color:#ffffff;flex:0 0 22px"><use href="#ic-backup"></use></svg></sc-if>
+            <sc-if value="{{ t.is_report }}"><svg width="20" height="20" style="color:#ffffff;flex:0 0 20px"><use href="#ic-report"></use></svg></sc-if>
+            {{ t.label }}
+          </button>
+        </sc-for>
+      </div>
+    </sc-if>
+    </div>
+    <div style="flex:0 0 auto; display:flex; align-items:center; gap:22px; padding:0 22px">
+      <span style="position:relative; display:inline-flex; align-items:center; height:26px; padding:0 14px 0 30px; background:#e8232f; color:#ffffff; border-radius:999px; font-size:14px; font-weight:700; cursor:pointer" data-hov="h3">
+        <span style="position:absolute; left:-2px; top:-2px; width:30px; height:30px; border-radius:999px; background:#c81119; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:#ffffff">?</span>
+        Help
+      </span>
+      <svg width="20" height="20" style="color:#9a9daa; cursor:pointer"><use href="#ic-search"></use></svg>
+      <span style="display:inline-flex; align-items:center; gap:9px; color:#9a9daa; font-size:14px; font-weight:700; cursor:pointer" data-hov="h2">
+        <svg width="19" height="19" style="color:#9a9daa"><use href="#ic-apps"></use></svg>My Apps
+      </span>
+      <svg width="19" height="19" style="color:#9a9daa; cursor:pointer"><use href="#ic-bell"></use></svg>
+      <svg width="24" height="24" style="color:#9a9daa; cursor:pointer"><use href="#ic-user"></use></svg>
+    </div>
+  </div>
+
+  <!-- ============ BODY ============ -->
+  <div style="display:flex; flex:1; min-height:0; position:relative">
+
+    <!-- icon rail -->
+    <nav style="width:54px; flex:0 0 54px; background:#292b37; display:flex; flex-direction:column; align-items:center; padding-top:22px; gap:24px">
+      <a href="#" style="color:#6b7086; display:flex" data-hov="h4"><svg width="25" height="25"><use href="#ic-home"></use></svg></a>
+      <a href="#" style="color:#6b7086; display:flex" data-hov="h4"><svg width="25" height="25"><use href="#ic-cash"></use></svg></a>
+      <a href="#" style="color:#6b7086; display:flex" data-hov="h4"><svg width="25" height="25"><use href="#ic-food"></use></svg></a>
+      <a href="#" style="color:#6b7086; display:flex" data-hov="h4"><svg width="25" height="25"><use href="#ic-labor"></use></svg></a>
+      <a href="#" style="color:#6b7086; display:flex" data-hov="h4"><svg width="23" height="23"><use href="#ic-report"></use></svg></a>
+      <a href="#" style="color:#6b7086; display:flex" data-hov="h4"><svg width="23" height="23"><use href="#ic-report"></use></svg></a>
+      <a href="#" style="color:#6b7086; display:flex" data-hov="h4"><svg width="25" height="25"><use href="#ic-admin"></use></svg></a>
+      <a href="#" style="color:#6b7086; display:flex" data-hov="h4"><svg width="24" height="24"><use href="#ic-help"></use></svg></a>
+    </nav>
+
+    <!-- main column -->
+    <div style="flex:1; min-width:0; display:flex; flex-direction:column">
+      <div style="background:#e0ebfd; padding:5px 14px; font-size:13px; color:#1f2430; flex:0 0 auto; display:flex; align-items:center; gap:0; flex-wrap:wrap">
+        <sc-for list="{{ crumbs }}" as="c">
+          <span onClick="{{ c.onClick }}" style="{{ c.style }}">{{ c.text }}</span>
+        </sc-for>
+        <sc-if value="{{ isWsched }}">
+          <span style="margin-left:auto; font-size:12.5px; color:#1f2430">Last Saved : 09/04/2026 07:42 AM EST&nbsp; | &nbsp;Edits since last Save : 0</span>
+        </sc-if>
+      </div>
+
+      <sc-if value="{{ isWorkflow }}">
+      <div style="flex:1; min-height:0; overflow:auto; padding:14px">
+        <div style="border:1px solid #cccccc; background:#ffffff; min-width:1520px">
+
+          <!-- toolbar -->
+          <div style="display:flex; align-items:center; height:40px; background:#ededee; border-bottom:1px solid #cccccc; padding:0 12px 0 14px; gap:0">
+            <select style="height:26px; width:118px; border:1px solid #9b9b9b; border-radius:2px; background:#ffffff; font-family:Arial, Helvetica, sans-serif; font-size:13px; color:#1f1f1f; padding:0 4px">
+              <option>Sep 09-10-20</option>
+              <option>Sep 08-09-20</option>
+            </select>
+            <input type="text" value="1016, Waynesville" style="height:24px; width:186px; margin-left:10px; border:1px solid #9b9b9b; border-radius:2px; background:#ffffff; font-family:Arial, Helvetica, sans-serif; font-size:13px; color:#1f1f1f; padding:0 6px">
+            <button type="button" style="height:25px; margin-left:12px; padding:0 12px; background:#015683; color:#ffffff; border:1px solid #01486e; border-radius:2px; font-family:Arial, Helvetica, sans-serif; font-size:13px; font-weight:700; cursor:pointer" data-hov="h5">GO</button>
+            <div style="flex:1"></div>
+            <div style="display:flex; align-items:center; gap:14px; font-size:12.5px; font-weight:700; color:#333333; white-space:nowrap">
+              <span>Last Cash and Sales Polling : 10:15 AM EST</span>
+              <span style="color:#999999">|</span>
+              <span>Last Timekeeping Polling : Not Polled</span>
+              <span style="color:#999999">|</span>
+              <span>Last PMIX Polling : Not Polled</span>
+              <svg width="19" height="21" viewBox="0 0 19 21" style="cursor:pointer"><path d="M2 1h9l6 6v13H2z" fill="#ffffff" stroke="#8a8a8a" stroke-width="1.2"></path><path d="M11 1v6h6" fill="none" stroke="#8a8a8a" stroke-width="1.2"></path><path d="M0.5 10h12v7h-12z" fill="#de202b"></path><text x="6.5" y="15.6" text-anchor="middle" font-family="Arial" font-size="6" font-weight="700" fill="#ffffff">PDF</text></svg>
+              <svg width="21" height="21" style="color:#2c8fd6; cursor:pointer"><use href="#ic-refresh"></use></svg>
+            </div>
+          </div>
+
+          <!-- KPI strip -->
+          <div style="display:flex; gap:70px; padding:14px 14px 12px 14px">
+            <div style="width:150px; flex:0 0 150px; border-radius:7px; overflow:hidden; box-shadow:0 1px 2px rgba(0,0,0,.18)">
+              <div style="height:26px; background:#523f67; color:#ffffff; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center; position:relative">
+                <svg width="16" height="14" viewBox="0 0 16 14" style="position:absolute; left:8px"><path d="M12 1.5 2.5 7 12 12.5z" fill="none" stroke="#cfc6d8" stroke-width="1.3" stroke-linejoin="round"></path></svg>
+                Day
+              </div>
+              <div style="height:32px; background:#756585; color:#ffffff; font-size:12.5px; font-weight:700; display:flex; align-items:center; justify-content:center">Today, 09/10</div>
+              <div style="height:32px; background:#3f2a56; color:#ffffff; font-size:12.5px; font-weight:700; display:flex; align-items:center; justify-content:center">Yesterday, 09/09</div>
+            </div>
+            <div style="width:150px; flex:0 0 150px; border-radius:6px; overflow:hidden; box-shadow:0 1px 2px rgba(0,0,0,.18)">
+              <div style="height:26px; background:#737373; color:#ffffff; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center">Forecasted Sales</div>
+              <div style="height:32px; background:#969696; color:#ffffff; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center; font-variant-numeric:tabular-nums">$5,120.14</div>
+              <div style="height:32px; background:#505050; color:#ffffff; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center; font-variant-numeric:tabular-nums">$4,264.95</div>
+            </div>
+            <div style="width:150px; flex:0 0 150px; border-radius:6px; overflow:hidden; box-shadow:0 1px 2px rgba(0,0,0,.18)">
+              <div style="height:26px; background:#737373; color:#ffffff; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center">Actual Sales</div>
+              <div style="height:32px; background:#969696; color:#ffffff; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center; font-variant-numeric:tabular-nums">$1,801.11</div>
+              <div style="height:32px; background:#505050; color:#ffffff; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center; font-variant-numeric:tabular-nums">$4,661.34</div>
+            </div>
+            <div style="width:150px; flex:0 0 150px; border-radius:6px; overflow:hidden; box-shadow:0 1px 2px rgba(0,0,0,.18)">
+              <div style="height:26px; background:#737373; color:#ffffff; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center">Variance (Act vs Ideal)</div>
+              <div style="height:32px; background:#969696; color:#ffffff; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center; font-variant-numeric:tabular-nums">(76.75)</div>
+              <div style="height:32px; background:#505050; color:#ffffff; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center; font-variant-numeric:tabular-nums">(82.25)</div>
+            </div>
+            <div style="width:150px; flex:0 0 150px; border-radius:6px; overflow:hidden; box-shadow:0 1px 2px rgba(0,0,0,.18)">
+              <div style="height:26px; background:#737373; color:#ffffff; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center">Labor %</div>
+              <div style="height:32px; background:#969696; color:#ffffff; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center">N/A</div>
+              <div style="height:32px; background:#505050; color:#ffffff; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center">N/A</div>
+            </div>
+            <div style="width:150px; flex:0 0 150px; border-radius:6px; overflow:hidden; box-shadow:0 1px 2px rgba(0,0,0,.18)">
+              <div style="height:26px; background:#737373; color:#ffffff; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center">OT Hours</div>
+              <div style="height:32px; background:#969696; color:#ffffff; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center">N/A</div>
+              <div style="height:32px; background:#505050; color:#ffffff; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center">N/A</div>
+            </div>
+            <div style="width:150px; flex:0 0 150px; border-radius:6px; overflow:hidden; box-shadow:0 1px 2px rgba(0,0,0,.18)">
+              <div style="height:26px; background:#737373; color:#ffffff; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center">Actual ICOS %</div>
+              <div style="height:32px; background:#969696; color:#ffffff; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center">N/A</div>
+              <div style="height:32px; background:#505050; color:#ffffff; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center">N/A</div>
+            </div>
+          </div>
+
+          <!-- Start of Day header -->
+          <div style="display:flex; align-items:center; height:32px; background:#0b0b3b; padding:0 0 0 14px; gap:14px">
+            <span style="color:#ffffff; font-size:15px; font-weight:700">Start of Day</span>
+            <div style="flex:1"></div>
+            <div style="width:530px; height:15px; border:2px solid #f5a623; background:repeating-linear-gradient(-45deg, #6ec358 0 7px, #4caf50 7px 14px)"></div>
+            <div style="width:44px; height:21px; background:#ffffff; border:1px solid #c4c4c4; display:flex; align-items:center; justify-content:center; font-size:12.5px; font-weight:400; color:#1f1f1f; margin-right:12px">1/1</div>
+          </div>
+
+          <!-- Workflow area -->
+          <div style="display:flex; height:346px; overflow-y:auto; overflow-x:hidden; border-bottom:1px solid #e5e5e5">
+            <div style="flex:0 0 300px; display:flex; flex-direction:column; gap:11px; padding:16px 0 16px 29px">
+              <img src="assets/btn-cash-and-sales.png" alt="Cash and Sales" style="width:178px; height:47px; display:block; cursor:pointer; border-radius:4px">
+              <img src="assets/btn-forecast.png" alt="Forecast" style="width:178px; height:47px; display:block; cursor:pointer; border-radius:4px">
+              <img src="assets/btn-food-management.png" alt="Food Management" style="width:178px; height:47px; display:block; cursor:pointer; border-radius:4px">
+              <div style="width:178px; height:47px; display:flex; align-items:stretch; border-radius:4px; overflow:hidden; border:1px solid #1e2c39; background:#4b6d90; cursor:pointer; box-shadow:0 1px 2px rgba(0,0,0,.25)">
+                <div style="width:47px; flex:0 0 47px; background:#13212f; display:flex; align-items:center; justify-content:center">
+                  <svg width="30" height="30"><use href="#ic-hat"></use></svg>
+                </div>
+                <div style="flex:1; display:flex; align-items:center; justify-content:center; color:#ffffff; font-size:14px; font-weight:700; line-height:1.15; text-align:center">Labor<br>Management</div>
+              </div>
+              <div style="width:178px; height:47px; display:flex; align-items:stretch; border-radius:4px; overflow:hidden; border:1px solid #1e2c39; background:#4b6d90; cursor:pointer; box-shadow:0 1px 2px rgba(0,0,0,.25)">
+                <div style="width:47px; flex:0 0 47px; background:#13212f; display:flex; align-items:center; justify-content:center">
+                  <svg width="26" height="26" viewBox="0 0 24 24" style="color:#ffffff"><g fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="6.5" width="18" height="11.5" rx="1.5"></rect><path d="M3 10h18"></path><path d="M6 14h4"></path></g></svg>
+                </div>
+                <div style="flex:1; display:flex; align-items:center; justify-content:center; color:#ffffff; font-size:14px; font-weight:700; line-height:1.15; text-align:center">Payroll<br>Management</div>
+              </div>
+            </div>
+
+            <div style="flex:1; min-width:0; padding:16px 40px 20px 0">
+              <div style="position:relative; height:78px">
+                <div style="position:absolute; top:18px; left:0; right:0; height:2px; background:#000000"></div>
+                <div style="position:relative; display:flex; gap:134px">
+                  <div style="width:78px; flex:0 0 78px">
+                    <div style="position:relative; width:78px; height:38px"><svg width="78" height="38" style="display:block"><use href="#wf-done"></use></svg></div>
+                    <div style="margin-top:6px; font-size:12.5px; color:#333333; white-space:nowrap">Previous Day Cash and Sales</div>
+                  </div>
+                </div>
+              </div>
+              <div style="position:relative; height:78px">
+                <div style="position:absolute; top:18px; left:0; right:0; height:2px; background:#000000"></div>
+                <div style="position:relative; display:flex; gap:134px">
+                  <div style="width:78px; flex:0 0 78px">
+                    <div style="position:relative; width:78px; height:38px"><svg width="78" height="38" style="display:block"><use href="#wf-pending"></use></svg><span style="position:absolute; left:50px; top:11px; width:16px; text-align:center; font-size:12px; font-weight:700; color:#ffffff">1</span></div>
+                    <div style="margin-top:6px; font-size:12.5px; color:#333333; white-space:nowrap">Review Forecast</div>
+                  </div>
+                </div>
+              </div>
+              <div style="position:relative; height:78px">
+                <div style="position:absolute; top:18px; left:0; right:0; height:2px; background:#000000"></div>
+                <div style="position:relative; display:flex; gap:134px">
+                  <div style="width:78px; flex:0 0 78px">
+                    <div style="position:relative; width:78px; height:38px"><svg width="78" height="38" style="display:block"><use href="#wf-pending"></use></svg><span style="position:absolute; left:50px; top:11px; width:16px; text-align:center; font-size:12px; font-weight:700; color:#ffffff">1</span></div>
+                    <div style="margin-top:6px; font-size:12.5px; color:#333333; white-space:nowrap">Print Prep Guide</div>
+                  </div>
+                  <div style="width:78px; flex:0 0 78px">
+                    <div style="position:relative; width:78px; height:38px"><svg width="78" height="38" style="display:block"><use href="#wf-pending"></use></svg><span style="position:absolute; left:50px; top:11px; width:16px; text-align:center; font-size:12px; font-weight:700; color:#ffffff">1</span></div>
+                    <div style="margin-top:6px; font-size:12.5px; color:#333333; white-space:nowrap">Print Bin Guide</div>
+                  </div>
+                  <div style="width:78px; flex:0 0 78px">
+                    <div style="position:relative; width:78px; height:38px"><svg width="78" height="38" style="display:block"><use href="#wf-done"></use></svg></div>
+                    <div style="margin-top:6px; font-size:12.5px; color:#333333; white-space:nowrap">Receiving</div>
+                  </div>
+                  <div style="width:78px; flex:0 0 78px">
+                    <div style="position:relative; width:78px; height:38px"><svg width="78" height="38" style="display:block"><use href="#wf-done"></use></svg></div>
+                    <div style="margin-top:6px; font-size:12.5px; color:#333333; white-space:nowrap">Transfer In/Out</div>
+                  </div>
+                  <div style="width:78px; flex:0 0 78px">
+                    <div style="position:relative; width:78px; height:38px"><svg width="78" height="38" style="display:block"><use href="#wf-done"></use></svg></div>
+                    <div style="margin-top:6px; font-size:12.5px; color:#333333; white-space:nowrap">Waste</div>
+                  </div>
+                  <div style="width:78px; flex:0 0 78px">
+                    <div style="position:relative; width:78px; height:38px"><svg width="78" height="38" style="display:block"><use href="#wf-pending"></use></svg><span style="position:absolute; left:50px; top:11px; width:16px; text-align:center; font-size:12px; font-weight:700; color:#ffffff">2</span></div>
+                    <div style="margin-top:6px; font-size:12.5px; color:#333333; white-space:nowrap">Ordering</div>
+                  </div>
+                </div>
+              </div>
+              <div style="position:relative; height:78px">
+                <div style="position:absolute; top:18px; left:0; right:0; height:2px; background:#000000"></div>
+                <div style="position:relative; display:flex; gap:134px">
+                  <div style="width:78px; flex:0 0 78px">
+                    <div style="position:relative; width:78px; height:38px"><svg width="78" height="38" style="display:block"><use href="#wf-done"></use></svg></div>
+                    <div style="margin-top:6px; font-size:12.5px; color:#333333; white-space:nowrap">Schedule</div>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+
+        </div>
+      </div>
+      </sc-if>
+      <sc-if value="{{ isWsched }}">
+        <div style="flex:1; min-height:0; overflow:auto; padding:10px 14px 14px 14px; background:#ffffff">
+          <div style="border:1px solid #cccccc; background:#ffffff; min-width:1500px">
+            <div style="display:flex; align-items:center; gap:10px; padding:10px 14px; border-bottom:1px solid #e2e2e2">
+              <div style="display:flex; align-items:center; background:#eef0f4; border-radius:999px; padding:2px">
+                <span style="padding:5px 16px; border-radius:999px; font-size:14px; font-weight:700; color:#3d4457; cursor:pointer">Day</span>
+                <span style="padding:5px 18px; border-radius:999px; background:#0561f6; color:#ffffff; font-size:14px; font-weight:700; cursor:pointer">Week</span>
+              </div>
+              <button type="button" style="width:26px; height:26px; border:1px solid #c4c4c4; border-radius:3px; background:#f4f5f7; cursor:pointer; color:#3d4457; font-size:13px">&#8249;</button>
+              <span style="position:relative; display:inline-flex; align-items:center">
+                <input type="text" value="09/07/2026" style="height:28px; width:180px; border:1px solid #b5b5b5; border-radius:3px; padding:0 30px 0 8px; font-family:Arial, Helvetica, sans-serif; font-size:14px">
+                <svg width="16" height="16" style="position:absolute; right:8px; color:#4a7ab5; pointer-events:none"><use href="#ic-cal"></use></svg>
+              </span>
+              <button type="button" style="width:26px; height:26px; border:1px solid #c4c4c4; border-radius:3px; background:#f4f5f7; cursor:pointer; color:#3d4457; font-size:13px">&#8250;</button>
+              <button type="button" style="height:30px; padding:0 26px; margin-left:14px; background:#0561f6; color:#ffffff; border:none; border-radius:4px; font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:700; cursor:pointer" data-hov="h6">Edit</button>
+              <button type="button" style="height:30px; padding:0 20px; background:transparent; color:#3d4457; border:none; font-family:Arial, Helvetica, sans-serif; font-size:14px; cursor:pointer">Select</button>
+              <div style="flex:1"></div>
+              <span style="font-size:17px; font-weight:700; color:#1f1f1f">Week : Mon, Sep 7 2026</span>
+              <div style="flex:1"></div>
+              <svg width="21" height="21" style="color:#2f4b7c; cursor:pointer"><use href="#ic-bars"></use></svg>
+              <svg width="21" height="21" style="color:#2f4b7c; cursor:pointer; margin-left:12px"><use href="#ic-sort"></use></svg>
+              <svg width="21" height="21" style="color:#2f4b7c; cursor:pointer; margin-left:12px"><use href="#ic-filter"></use></svg>
+              <svg width="21" height="21" style="color:#2f4b7c; cursor:pointer; margin-left:12px"><use href="#ic-refresh"></use></svg>
+            </div>
+
+            <div style="display:flex; align-items:center; height:44px; background:#ededed; border-bottom:1px solid #d9d9d9">
+              <div style="width:300px; flex:0 0 300px; padding:0 12px">
+                <span style="position:relative; display:flex; align-items:center">
+                  <input type="text" placeholder="Search Employee" style="height:28px; width:100%; border:1px solid #b5b5b5; border-radius:3px; padding:0 30px 0 10px; font-family:Arial, Helvetica, sans-serif; font-size:13.5px">
+                  <svg width="16" height="16" style="position:absolute; right:8px; color:#1f4e79; pointer-events:none"><use href="#ic-search"></use></svg>
+                </span>
+              </div>
+                <div style="flex:1 1 0; min-width:0; display:flex; align-items:center; justify-content:center; gap:10px; border-left:1px solid #d9d9d9; font-size:13.5px; font-weight:700; color:#1f1f1f">
+                  MON (09/07)
+                  <svg width="16" height="16" style="color:#4a7ab5"><use href="#ic-cal"></use></svg>
+                  <svg width="15" height="15" style="color:#4a7ab5"><use href="#ic-bars"></use></svg>
+                </div>
+                <div style="flex:1 1 0; min-width:0; display:flex; align-items:center; justify-content:center; gap:10px; border-left:1px solid #d9d9d9; font-size:13.5px; font-weight:700; color:#1f1f1f">
+                  TUE (09/08)
+                  <svg width="16" height="16" style="color:#4a7ab5"><use href="#ic-cal"></use></svg>
+                  <svg width="15" height="15" style="color:#4a7ab5"><use href="#ic-bars"></use></svg>
+                </div>
+                <div style="flex:1 1 0; min-width:0; display:flex; align-items:center; justify-content:center; gap:10px; border-left:1px solid #d9d9d9; font-size:13.5px; font-weight:700; color:#1f1f1f">
+                  WED (09/09)
+                  <svg width="16" height="16" style="color:#4a7ab5"><use href="#ic-cal"></use></svg>
+                  <svg width="15" height="15" style="color:#4a7ab5"><use href="#ic-bars"></use></svg>
+                </div>
+                <div style="flex:1 1 0; min-width:0; display:flex; align-items:center; justify-content:center; gap:10px; border-left:1px solid #d9d9d9; font-size:13.5px; font-weight:700; color:#1f1f1f">
+                  THU (09/10)
+                  <svg width="16" height="16" style="color:#4a7ab5"><use href="#ic-cal"></use></svg>
+                  <svg width="15" height="15" style="color:#4a7ab5"><use href="#ic-bars"></use></svg>
+                </div>
+                <div style="flex:1 1 0; min-width:0; display:flex; align-items:center; justify-content:center; gap:10px; border-left:1px solid #d9d9d9; font-size:13.5px; font-weight:700; color:#1f1f1f">
+                  FRI (09/11)
+                  <svg width="16" height="16" style="color:#4a7ab5"><use href="#ic-cal"></use></svg>
+                  <svg width="15" height="15" style="color:#4a7ab5"><use href="#ic-bars"></use></svg>
+                </div>
+                <div style="flex:1 1 0; min-width:0; display:flex; align-items:center; justify-content:center; gap:10px; border-left:1px solid #d9d9d9; font-size:13.5px; font-weight:700; color:#1f1f1f">
+                  SAT (09/12)
+                  <svg width="16" height="16" style="color:#4a7ab5"><use href="#ic-cal"></use></svg>
+                  <svg width="15" height="15" style="color:#4a7ab5"><use href="#ic-bars"></use></svg>
+                </div>
+                <div style="flex:1 1 0; min-width:0; display:flex; align-items:center; justify-content:center; gap:10px; border-left:1px solid #d9d9d9; font-size:13.5px; font-weight:700; color:#1f1f1f">
+                  SUN (09/13)
+                  <svg width="16" height="16" style="color:#4a7ab5"><use href="#ic-cal"></use></svg>
+                  <svg width="15" height="15" style="color:#4a7ab5"><use href="#ic-bars"></use></svg>
+                </div>
+            </div>
+
+            <div style="display:flex; align-items:center; height:54px; border-bottom:1px solid #e2e2e2">
+              <div style="width:300px; flex:0 0 300px; display:flex; align-items:center; gap:12px; padding:0 12px">
+                <span style="font-size:13.5px; font-weight:700; color:#1f1f1f">Unassigned (0)</span>
+                <span style="width:38px; height:19px; border-radius:999px; background:#d5d8de; display:inline-flex; align-items:center; padding:2px"><span style="width:15px; height:15px; border-radius:999px; background:#ffffff"></span></span>
+              </div>
+              <sc-for list="{{ weekCols }}" as="d">
+                <div style="flex:1 1 0; min-width:0; align-self:stretch; border-left:1px solid #e2e2e2"></div>
+              </sc-for>
+            </div>
+
+            <sc-for list="{{ employees }}" as="e">
+              <div style="display:flex; align-items:stretch; min-height:54px; border-bottom:1px solid #e2e2e2">
+                <div style="width:300px; flex:0 0 300px; display:flex; align-items:center; gap:12px; padding:0 12px; border-left:4px solid #3cb54a">
+                  <span style="{{ e.avatarStyle }}">{{ e.initials }}</span>
+                  <span style="display:flex; flex-direction:column; gap:2px; min-width:0">
+                    <span style="font-size:13.5px; color:#1f1f1f; white-space:nowrap">{{ e.name }}</span>
+                    <span style="{{ e.hoursStyle }}">{{ e.hours }}</span>
+                  </span>
+                  <sc-if value="{{ e.warn }}">
+                    <svg width="17" height="17" style="color:#d9534f; margin-left:auto"><use href="#ic-warn"></use></svg>
+                  </sc-if>
+                </div>
+                <sc-for list="{{ e.cells }}" as="c">
+                  <div style="flex:1 1 0; min-width:0; border-left:1px solid #e2e2e2; display:flex; align-items:center; padding:6px 8px">
+                    <sc-if value="{{ c.has }}">
+                      <span style="{{ c.style }}">{{ c.label }}</span>
+                    </sc-if>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-for>
+
+            <div style="display:flex; align-items:center; height:34px; border-bottom:1px solid #e2e2e2; background:#ebebfd; font-weight:700">
+              <div style="width:300px; flex:0 0 300px; display:flex; align-items:center; gap:8px; padding:0 12px; font-size:13.5px; color:#1f1f1f; cursor:pointer" onClick="{{ toggleAnalysis }}">
+                <span style="{{ analysisArrowStyle }}">&#9654;</span>
+                <span>{{ analysisHeadLabel }}</span>
+              </div>
+              <sc-for list="{{ analysisHeadValues }}" as="hv">
+                <div style="flex:1 1 0; min-width:0; border-left:1px solid #e2e2e2; text-align:center; font-size:13.5px; color:#1f1f1f; font-variant-numeric:tabular-nums">{{ hv.t }}</div>
+              </sc-for>
+            </div>
+            <sc-for list="{{ summaryRows }}" as="sr">
+              <div style="{{ sr.rowStyle }}">
+                <div style="width:300px; flex:0 0 300px; padding:0 12px 0 32px; font-size:13.5px; color:#1f1f1f">{{ sr.label }}</div>
+                <sc-for list="{{ sr.values }}" as="v">
+                  <div style="flex:1 1 0; min-width:0; border-left:1px solid #e2e2e2; text-align:center; font-size:13.5px; color:#1f1f1f; font-variant-numeric:tabular-nums">{{ v.t }}</div>
+                </sc-for>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ isLbu }}">
+        <div style="flex:1; min-height:0; overflow:auto; padding:12px 16px 18px 16px; background:#ffffff">
+          <div style="display:flex; align-items:flex-start; gap:16px; flex-wrap:wrap">
+            <div style="flex:1 1 100%; min-width:360px; border:1px solid #d9d9d9; border-radius:4px; box-shadow:0 1px 2px rgba(0,0,0,.10)">
+              <div style="height:32px; display:flex; align-items:center; padding:0 14px; background:#0b0b3b; color:#ffffff; font-size:14px; font-weight:700">Upload Labor Budget</div>
+              <div style="padding:16px 18px 18px 18px">
+                <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px; flex-wrap:wrap">
+                  <span style="width:60px; flex:0 0 60px; font-size:13.5px; font-weight:700">Period</span>
+                  <select style="height:28px; width:160px; border:1px solid #b5b5b5; border-radius:3px; font-family:Arial, Helvetica, sans-serif; font-size:13.5px; padding:0 4px">
+                    <option>P09 - Sep 2026</option>
+                    <option>P10 - Oct 2026</option>
+                  </select>
+                  <span style="width:150px; flex:0 0 150px; margin-left:18px; font-size:13.5px; font-weight:700">Upload Budget File</span>
+                  <span style="flex:1 1 260px; min-width:220px; height:28px; display:flex; align-items:center; padding:0 10px; border:1px solid #b5b5b5; border-radius:3px; background:#fbfbfb; font-size:13px; color:#6e6e6e; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">{{ lbuFileName }}</span>
+                  <input id="lbuFileInput" type="file" accept=".xls,.xlsx,.csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/csv" onChange="{{ lbuPick }}" style="display:none">
+                  <button type="button" onClick="{{ lbuBrowse }}" style="height:28px; padding:0 16px; background:#ffffff; color:#1a5c8f; border:1px solid #cfd6dc; border-radius:3px; font-family:Arial, Helvetica, sans-serif; font-size:13.5px; font-weight:700; cursor:pointer; white-space:nowrap">Browse</button>
+                  <button type="button" onClick="{{ lbuUpload }}" style="{{ lbuUploadStyle }}">Upload</button>
+                </div>
+                <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap">
+                  <button type="button" onClick="{{ lbuSample }}" style="height:30px; padding:0 18px; background:#ffffff; color:#1a5c8f; border:1px solid #cfd6dc; border-radius:3px; font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:700; cursor:pointer; white-space:nowrap">Download Sample File</button>
+                  <button type="button" onClick="{{ lbuClear }}" style="height:30px; padding:0 18px; background:transparent; color:#3d4457; border:none; font-family:Arial, Helvetica, sans-serif; font-size:14px; cursor:pointer">Clear</button>
+                </div>
+                <div style="margin-top:12px; font-size:12.5px; color:#6e6e6e">Sample file columns: Store Number, Period, Week, Budgeted Hourly Mgr %, Budgeted Crew %. Total Budget % is calculated on upload.</div>
+                <div style="margin-top:4px; font-size:12.5px; color:#6e6e6e">Accepted formats : .xls, .xlsx, .csv &nbsp;&middot;&nbsp; Maximum size : 5 MB &nbsp;&middot;&nbsp; Header row required.</div>
+                <sc-if value="{{ lbuNotice }}">
+                  <div style="{{ lbuNoticeStyle }}">{{ lbuNotice }}</div>
+                </sc-if>
+              </div>
+            </div>
+          </div>
+
+          <sc-if value="{{ isLbuSummary }}">
+          <div style="margin-top:18px; border:1px solid #d9d9d9; border-radius:4px; background:#ffffff; box-shadow:0 1px 2px rgba(0,0,0,.10); padding:12px">
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px; flex-wrap:wrap">
+              <span style="font-size:15px; font-weight:700; color:#1f1f1f">Summary</span>
+              <span style="font-size:13px; color:#6e6e6e">{{ lbuCountText }}</span>
+            </div>
+            <div style="overflow-x:auto">
+              <div style="min-width:1100px">
+                <div style="display:flex; align-items:center; height:34px; background:#ededee; border:1px solid #d9d9d9">
+                  <sc-for list="{{ lbuCols }}" as="c">
+                    <div style="{{ c.headStyle }}">{{ c.label }}</div>
+                  </sc-for>
+                </div>
+                <sc-for list="{{ lbuRows }}" as="r">
+                  <div style="{{ r.rowStyle }}">
+                    <sc-for list="{{ r.cells }}" as="c">
+                      <div style="{{ c.style }}">{{ c.t }}</div>
+                    </sc-for>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+          </sc-if>
+          <sc-if value="{{ isLbuStats }}">
+            <div style="margin-top:18px; border:1px solid #d9d9d9; border-radius:4px; background:#ffffff; box-shadow:0 1px 2px rgba(0,0,0,.10); padding:16px 18px 20px 18px">
+              <div style="font-size:15px; font-weight:700; margin-bottom:14px">Stats</div>
+              <div style="display:flex; gap:14px; flex-wrap:wrap">
+                <sc-for list="{{ lbuStats }}" as="st">
+                  <div style="flex:0 0 210px; border:1px solid #d9d9d9; border-radius:3px; background:#f8f8f8; padding:12px 14px">
+                    <div style="font-size:12.5px; color:#5b6b7a; margin-bottom:8px">{{ st.label }}</div>
+                    <div style="font-size:22px; font-weight:700; color:#1f1f1f; font-variant-numeric:tabular-nums">{{ st.value }}</div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ isLbuAudit }}">
+            <div style="margin-top:18px; border:1px solid #d9d9d9; border-radius:4px; background:#ffffff; box-shadow:0 1px 2px rgba(0,0,0,.10); padding:12px">
+              <div style="display:flex; align-items:center; height:34px; background:#ededee; border:1px solid #d9d9d9">
+                <div style="width:170px; flex:0 0 170px; text-align:center; font-size:14px; font-weight:700">Date / Time</div>
+                <div style="width:1px; align-self:stretch; background:#d9d9d9"></div>
+                <div style="width:170px; flex:0 0 170px; text-align:center; font-size:14px; font-weight:700">Action</div>
+                <div style="width:1px; align-self:stretch; background:#d9d9d9"></div>
+                <div style="flex:1 1 0; text-align:center; font-size:14px; font-weight:700">Details</div>
+                <div style="width:1px; align-self:stretch; background:#d9d9d9"></div>
+                <div style="width:230px; flex:0 0 230px; text-align:center; font-size:14px; font-weight:700">User</div>
+              </div>
+              <sc-for list="{{ lbuAuditRows }}" as="a">
+                <div style="display:flex; align-items:center; min-height:33px; border-left:1px solid #d9d9d9; border-right:1px solid #d9d9d9; border-bottom:1px solid #e6e6e6">
+                  <div style="width:170px; flex:0 0 170px; padding-left:14px; font-size:13.5px; font-variant-numeric:tabular-nums">{{ a.when }}</div>
+                  <div style="width:170px; flex:0 0 170px; padding-left:14px; font-size:13.5px; font-weight:700">{{ a.action }}</div>
+                  <div style="flex:1 1 0; padding:6px 14px; font-size:13.5px; min-width:0">{{ a.detail }}</div>
+                  <div style="width:230px; flex:0 0 230px; padding-left:14px; font-size:13.5px">{{ a.user }}</div>
+                </div>
+              </sc-for>
+              <sc-if value="{{ lbuAuditEmpty }}">
+                <div style="border:1px solid #d9d9d9; border-top:none; padding:22px; text-align:center; font-size:13.5px; color:#6e6e6e">No activity recorded yet.</div>
+              </sc-if>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
+      <sc-if value="{{ isMlmuList }}">
+        <div style="flex:1; min-height:0; overflow:auto; padding:10px 14px 16px 14px; background:#ffffff">
+          <button type="button" onClick="{{ addSetup }}" style="height:30px; padding:0 20px; background:#015683; color:#ffffff; border:1px solid #01486e; border-radius:3px; font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:700; cursor:pointer" data-hov="h5">Add</button>
+          <div style="margin-top:10px; border:1px solid #d9d9d9; border-radius:4px; background:#ffffff; box-shadow:0 1px 2px rgba(0,0,0,.10); padding:12px">
+            <div style="display:flex; align-items:center; height:34px; background:#ededee; border:1px solid #d9d9d9">
+              <div style="flex:2 1 0; text-align:center; font-size:14px; font-weight:700">Name</div>
+              <div style="width:1px; align-self:stretch; background:#d9d9d9"></div>
+              <div style="flex:1 1 0; text-align:center; font-size:14px; font-weight:700">Impact Percentage</div>
+              <div style="width:1px; align-self:stretch; background:#d9d9d9"></div>
+              <div style="flex:1 1 0; text-align:center; font-size:14px; font-weight:700">Matrices Assigned</div>
+            </div>
+            <sc-for list="{{ setupRows }}" as="su">
+              <div style="display:flex; align-items:center; height:33px; border-left:1px solid #d9d9d9; border-right:1px solid #d9d9d9; border-bottom:1px solid #e6e6e6">
+                <div style="flex:2 1 0; padding-left:14px; min-width:0"><a href="#" onClick="{{ su.onOpen }}" style="font-size:14.5px; color:#1a5c8f; text-decoration:underline">{{ su.name }}</a></div>
+                <div style="flex:1 1 0; padding-right:22px; text-align:right; font-size:14.5px; font-variant-numeric:tabular-nums">{{ su.impact }}</div>
+                <div style="flex:1 1 0; padding-right:22px; text-align:right; font-size:14.5px; font-variant-numeric:tabular-nums">{{ su.count }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ isWsched }}">
+      <div style="display:flex; align-items:stretch">
+        <button type="button" style="display:flex; align-items:center; gap:8px; padding:0 18px; border:none; cursor:pointer; white-space:nowrap; background:transparent; color:#e6e8ee; font-family:Arial, Helvetica, sans-serif; font-size:15px" data-hov="h1">
+          Action <svg width="12" height="12" style="color:#e6e8ee"><use href="#ic-caret"></use></svg>
+        </button>
+        <button type="button" style="display:flex; align-items:center; gap:9px; padding:0 18px; border:none; cursor:pointer; white-space:nowrap; background:transparent; color:#ffffff; font-family:Arial, Helvetica, sans-serif; font-size:15px; font-weight:400" data-hov="h1">
+          <svg width="20" height="20" style="color:#ffffff; flex:0 0 20px"><use href="#ic-report"></use></svg>
+          <span style="display:flex; flex-direction:column; align-items:flex-start; line-height:1.15">Audit Trail</span>
+        </button>
+        <button type="button" style="display:flex; align-items:center; gap:9px; padding:0 18px; border:none; cursor:pointer; white-space:nowrap; background:transparent; color:#ffffff; font-family:Arial, Helvetica, sans-serif; font-size:15px; font-weight:400" data-hov="h1">
+          <svg width="20" height="20" style="color:#ffffff; flex:0 0 20px"><use href="#ic-grid"></use></svg>
+          <span style="display:flex; flex-direction:column; align-items:flex-start; line-height:1.15">Dashboard</span>
+        </button>
+        <button type="button" style="display:flex; align-items:center; gap:9px; padding:0 18px; border:none; cursor:pointer; white-space:nowrap; background:transparent; color:#ffffff; font-family:Arial, Helvetica, sans-serif; font-size:15px; font-weight:400" data-hov="h1">
+          <svg width="20" height="20" style="color:#ffffff; flex:0 0 20px"><use href="#ic-report"></use></svg>
+          <span style="display:flex; flex-direction:column; align-items:flex-start; line-height:1.15">Reports</span>
+        </button>
+        <button type="button" style="display:flex; align-items:center; gap:9px; padding:0 18px; border:none; cursor:pointer; white-space:nowrap; background:transparent; color:#ffffff; font-family:Arial, Helvetica, sans-serif; font-size:15px; font-weight:400" data-hov="h1">
+          <svg width="20" height="20" style="color:#ffffff; flex:0 0 20px"><use href="#ic-labor"></use></svg>
+          <span style="display:flex; flex-direction:column; align-items:flex-start; line-height:1.15">Store Shifts</span>
+        </button>
+        <button type="button" style="display:flex; align-items:center; gap:9px; padding:0 18px; border:none; cursor:pointer; white-space:nowrap; background:#20232e; color:#ffffff; font-family:Arial, Helvetica, sans-serif; font-size:15px; font-weight:700" data-hov="h1">
+          <svg width="20" height="20" style="color:#ffffff; flex:0 0 20px"><use href="#ic-stats"></use></svg>
+          <span style="display:flex; flex-direction:column; align-items:flex-start; line-height:1.15">Analysis<span style="font-size:11.5px; font-weight:400; color:#c3c8d3">14.28% - OT 0:00</span></span>
+        </button>
+        <button type="button" style="display:flex; align-items:center; gap:9px; padding:0 18px; border:none; cursor:pointer; white-space:nowrap; background:transparent; color:#ffffff; font-family:Arial, Helvetica, sans-serif; font-size:15px; font-weight:400" data-hov="h1">
+          <svg width="20" height="20" style="color:#ffffff; flex:0 0 20px"><use href="#ic-warn"></use></svg>
+          <span style="display:flex; flex-direction:column; align-items:flex-start; line-height:1.15">Warnings<span style="font-size:11.5px; font-weight:400; color:#c3c8d3">24 Alerts</span></span>
+        </button>
+        <button type="button" style="display:flex; align-items:center; gap:9px; padding:0 18px; border:none; cursor:pointer; white-space:nowrap; background:transparent; color:#ffffff; font-family:Arial, Helvetica, sans-serif; font-size:15px; font-weight:400" data-hov="h1">
+          <svg width="20" height="20" style="color:#ffffff; flex:0 0 20px"><use href="#ic-clock"></use></svg>
+          <span style="display:flex; flex-direction:column; align-items:flex-start; line-height:1.15">Time Off<span style="font-size:11.5px; font-weight:400; color:#c3c8d3">(0)</span></span>
+        </button>
+        <button type="button" style="display:flex; align-items:center; gap:9px; padding:0 18px; border:none; cursor:pointer; white-space:nowrap; background:transparent; color:#ffffff; font-family:Arial, Helvetica, sans-serif; font-size:15px; font-weight:400" data-hov="h1">
+          <svg width="20" height="20" style="color:#ffffff; flex:0 0 20px"><use href="#ic-jobcode"></use></svg>
+          <span style="display:flex; flex-direction:column; align-items:flex-start; line-height:1.15">Disassociated Shifts</span>
+        </button>
+        <span style="display:flex; align-items:center; padding:0 14px; color:#c3c8d3; font-size:26px; font-weight:300">&#10095;</span>
+      </div>
+    </sc-if>
+    <sc-if value="{{ isMlmu }}">
+        <div style="flex:1; min-height:0; overflow:auto; padding:10px 18px 16px 18px; background:#ffffff">
+          <div style="display:flex; justify-content:flex-end">
+            <button type="button" style="display:flex; align-items:center; gap:8px; height:30px; padding:0 14px; background:#015683; color:#ffffff; border:1px solid #01486e; border-radius:3px; font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:700; cursor:pointer" data-hov="h5">
+              <svg width="17" height="17" style="color:#ffffff"><use href="#ic-save"></use></svg>Save
+            </button>
+          </div>
+          <sc-if value="{{ isMlmuStats }}">
+            <div style="margin-top:8px; border:1px solid #d9d9d9; border-radius:4px; background:#ffffff; box-shadow:0 1px 2px rgba(0,0,0,.10); padding:18px 22px 26px 22px">
+              <div style="display:flex; align-items:center; gap:24px">
+                <div style="width:340px; flex:0 0 340px; font-size:13.5px; font-weight:700">Name</div>
+                <input type="text" value="{{ setupName }}" onChange="{{ onSetupName }}" style="height:28px; width:280px; border:1px solid #b5b5b5; border-radius:3px; padding:0 8px; font-family:Arial, Helvetica, sans-serif; font-size:14px">
+              </div>
+              <div style="display:flex; align-items:center; gap:24px; margin-top:28px; flex-wrap:wrap">
+                <div style="width:340px; flex:0 0 340px; font-size:13.5px; font-weight:700">Impact Percentage</div>
+                <input type="text" value="{{ setupImpact }}" onChange="{{ onSetupImpact }}" style="height:28px; width:215px; border:1px solid #b5b5b5; border-radius:3px; padding:0 8px; text-align:right; font-family:Arial, Helvetica, sans-serif; font-size:14px">
+                <span style="font-size:13.5px; font-weight:700">%</span>
+                <button type="button" onClick="{{ applyImpact }}" style="{{ impactBtnStyle }}">Apply to Assigned Matrices</button>
+              </div>
+              <div style="margin-top:14px; font-size:12.5px; color:#6e6e6e; max-width:720px">End Value is scaled by the impact percentage and rounded up; each row's Start Value takes the previous row's End Value so the bands stay contiguous. The 9,999.00 cap is left unchanged.</div>
+              <sc-if value="{{ impactNotice }}">
+                <div style="margin-top:12px; border:1px solid #b7dcbb; background:#e9f6ea; color:#1f5b28; font-size:13px; font-weight:700; padding:8px 12px; border-radius:3px">{{ impactNotice }}</div>
+              </sc-if>
+            </div>
+          </sc-if>
+          <sc-if value="{{ isMlmuAssign }}">
+            <div style="margin-top:8px; border:1px solid #d9d9d9; border-radius:4px; background:#ffffff; box-shadow:0 1px 2px rgba(0,0,0,.10); padding:18px 22px 22px 22px">
+              <div style="display:flex; align-items:flex-start; gap:22px">
+                <div style="flex:1 1 0; min-width:0">
+                  <div style="font-size:13.5px; font-weight:700; margin-bottom:8px">Available Matrices</div>
+                  <select multiple="{{ true }}" value="{{ availSel }}" onChange="{{ onAvailSel }}" style="width:100%; height:330px; border:1px solid #b5b5b5; border-radius:3px; font-family:Arial, Helvetica, sans-serif; font-size:13.5px; padding:4px">
+                    <sc-for list="{{ availOptions }}" as="o">
+                      <option value="{{ o.key }}" style="{{ o.style }}">{{ o.label }}</option>
+                    </sc-for>
+                  </select>
+                </div>
+                <div style="flex:0 0 130px; display:flex; flex-direction:column; gap:10px; padding-top:34px">
+                  <button type="button" onClick="{{ onAdd }}" style="{{ addBtnStyle }}">Add &#8594;</button>
+                  <button type="button" onClick="{{ onRemove }}" style="{{ removeBtnStyle }}">&#8592; Remove</button>
+                </div>
+                <div style="flex:1 1 0; min-width:0">
+                  <div style="font-size:13.5px; font-weight:700; margin-bottom:8px">Assigned Matrices</div>
+                  <select multiple="{{ true }}" value="{{ assignedSel }}" onChange="{{ onAssignedSel }}" style="width:100%; height:330px; border:1px solid #b5b5b5; border-radius:3px; font-family:Arial, Helvetica, sans-serif; font-size:13.5px; padding:4px">
+                    <sc-for list="{{ assignedOptions }}" as="o">
+                      <option value="{{ o.key }}">{{ o.label }}</option>
+                    </sc-for>
+                  </select>
+                </div>
+              </div>
+              <div style="margin-top:12px; font-size:12.5px; color:#6e6e6e">A matrix can belong to one setup only. Adding a matrix already held by another setup moves it here and drops it from that setup.</div>
+              <sc-if value="{{ assignNotice }}">
+                <div style="margin-top:10px; border:1px solid #f0d59a; background:#fdf5e3; color:#6b4d06; font-size:13px; font-weight:700; padding:8px 12px; border-radius:3px">{{ assignNotice }}</div>
+              </sc-if>
+            </div>
+          </sc-if>
+          <sc-if value="{{ isMlmuAudit }}">
+            <div style="margin-top:8px; border:1px solid #d9d9d9; border-radius:4px; background:#ffffff; box-shadow:0 1px 2px rgba(0,0,0,.10); padding:12px">
+              <div style="display:flex; align-items:center; height:34px; background:#ededee; border:1px solid #d9d9d9">
+                <div style="width:170px; flex:0 0 170px; text-align:center; font-size:14px; font-weight:700">Date / Time</div>
+                <div style="width:1px; align-self:stretch; background:#d9d9d9"></div>
+                <div style="width:170px; flex:0 0 170px; text-align:center; font-size:14px; font-weight:700">Action</div>
+                <div style="width:1px; align-self:stretch; background:#d9d9d9"></div>
+                <div style="flex:1 1 0; text-align:center; font-size:14px; font-weight:700">Details</div>
+                <div style="width:1px; align-self:stretch; background:#d9d9d9"></div>
+                <div style="width:230px; flex:0 0 230px; text-align:center; font-size:14px; font-weight:700">User</div>
+              </div>
+              <sc-for list="{{ auditRows }}" as="a">
+                <div style="display:flex; align-items:center; min-height:33px; border-left:1px solid #d9d9d9; border-right:1px solid #d9d9d9; border-bottom:1px solid #e6e6e6">
+                  <div style="width:170px; flex:0 0 170px; padding-left:14px; font-size:13.5px; font-variant-numeric:tabular-nums">{{ a.when }}</div>
+                  <div style="width:170px; flex:0 0 170px; padding-left:14px; font-size:13.5px; font-weight:700">{{ a.action }}</div>
+                  <div style="flex:1 1 0; padding:6px 14px; font-size:13.5px; min-width:0">{{ a.detail }}</div>
+                  <div style="width:230px; flex:0 0 230px; padding-left:14px; font-size:13.5px">{{ a.user }}</div>
+                </div>
+              </sc-for>
+              <sc-if value="{{ auditEmpty }}">
+                <div style="border:1px solid #d9d9d9; border-top:none; padding:22px; text-align:center; font-size:13.5px; color:#6e6e6e">No activity recorded for this setup yet.</div>
+              </sc-if>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
+      <sc-if value="{{ isList }}">
+        <div style="flex:1; min-height:0; overflow:auto; padding:10px 14px 16px 14px; background:#ffffff">
+          <div style="display:flex; align-items:center; gap:10px">
+            <button type="button" style="height:30px; padding:0 20px; background:#015683; color:#ffffff; border:1px solid #01486e; border-radius:3px; font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:700; cursor:pointer" data-hov="h5">Add</button>
+            <button type="button" onClick="{{ openPct }}" style="{{ pctBtnStyle }}">Update by %</button>
+            <span style="font-size:13px; color:#4a4a4a">{{ selectionText }}</span>
+          </div>
+          <sc-if value="{{ pctBanner }}">
+            <div style="margin-top:10px; border:1px solid #b7dcbb; background:#e9f6ea; color:#1f5b28; font-size:13.5px; font-weight:700; padding:8px 12px; border-radius:3px">{{ pctBanner }}</div>
+          </sc-if>
+          <div style="margin-top:10px; border:1px solid #d9d9d9; border-radius:4px; background:#ffffff; box-shadow:0 1px 2px rgba(0,0,0,.10)">
+            <div style="display:flex; align-items:center; padding:10px 12px 8px 12px">
+              <select value="{{ perPage }}" onChange="{{ onPerPage }}" style="height:26px; width:74px; border:1px solid #b5b5b5; border-radius:3px; background:#ffffff; font-family:Arial, Helvetica, sans-serif; font-size:13.5px; color:#1f1f1f; padding:0 4px">
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
+              <a href="#" style="margin-left:12px; font-size:14px; color:#1a5c8f">Records per page</a>
+              <div style="flex:1"></div>
+              <span style="font-size:14px; font-weight:700; color:#1f1f1f; margin-right:8px">Search:</span>
+              <span style="position:relative; display:inline-flex; align-items:center">
+                <input type="text" value="{{ search }}" onChange="{{ onSearch }}" style="height:28px; width:212px; border:1px solid #b5b5b5; border-radius:3px; padding:0 30px 0 8px; font-family:Arial, Helvetica, sans-serif; font-size:13.5px; color:#1f1f1f">
+                <svg width="17" height="17" style="position:absolute; right:8px; color:#1f4e79; pointer-events:none"><use href="#ic-search"></use></svg>
+              </span>
+              <button type="button" style="height:30px; margin-left:14px; padding:0 18px; background:#015683; color:#ffffff; border:1px solid #01486e; border-radius:3px; font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:700; cursor:pointer" data-hov="h5">Export</button>
+            </div>
+
+            <div style="padding:0 12px 10px 12px">
+              <div style="display:flex; align-items:center; height:34px; background:#ededee; border:1px solid #d9d9d9">
+                <div style="width:44px; flex:0 0 44px; display:flex; align-items:center; justify-content:center">
+                  <input type="checkbox" checked="{{ allChecked }}" onChange="{{ onToggleAll }}" style="width:14px; height:14px">
+                </div>
+                <div style="width:1px; align-self:stretch; background:#d9d9d9"></div>
+                <div style="flex:1 1 0; text-align:center; font-size:14px; font-weight:700; color:#1f1f1f">Name</div>
+                <div style="width:1px; align-self:stretch; background:#d9d9d9"></div>
+                <div style="flex:1 1 0; text-align:center; font-size:14px; font-weight:700; color:#1f1f1f">Key</div>
+              </div>
+              <sc-for list="{{ pageRows }}" as="r">
+                <div style="{{ r.rowStyle }}">
+                  <div style="width:44px; flex:0 0 44px; display:flex; align-items:center; justify-content:center">
+                    <input type="checkbox" checked="{{ r.checked }}" onChange="{{ r.onCheck }}" style="width:14px; height:14px">
+                  </div>
+                  <div style="flex:1 1 0; padding-left:14px; min-width:0">
+                    <a href="#" onClick="{{ r.onOpen }}" style="font-size:14.5px; color:#1a5c8f; text-decoration:underline">{{ r.name }}</a>
+                  </div>
+                  <div style="flex:1 1 0; padding-right:22px; text-align:right; font-size:14.5px; color:#1f1f1f; font-variant-numeric:tabular-nums">{{ r.key }}</div>
+                </div>
+              </sc-for>
+              <div style="display:flex; align-items:center; padding:14px 4px 4px 4px">
+                <span style="font-size:13.5px; color:#1f1f1f">{{ showingText }}</span>
+                <div style="flex:1"></div>
+                <div style="display:flex; align-items:stretch; min-width:0; overflow:hidden">
+                  <button type="button" onClick="{{ onPrev }}" style="{{ prevStyle }}">&#8592; Previous</button>
+                  <sc-for list="{{ pages }}" as="p">
+                    <button type="button" onClick="{{ p.onClick }}" style="{{ p.style }}">{{ p.n }}</button>
+                  </sc-for>
+                  <button type="button" onClick="{{ onNext }}" style="{{ nextStyle }}">Next &#8594;</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ isDetail }}">
+        <div style="flex:1; min-height:0; overflow:auto; padding:10px 18px 16px 18px; background:#ffffff">
+          <div style="display:flex; justify-content:flex-end">
+            <button type="button" style="display:flex; align-items:center; gap:8px; height:30px; padding:0 14px; background:#015683; color:#ffffff; border:1px solid #01486e; border-radius:3px; font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:700; cursor:pointer" data-hov="h5">
+              <svg width="17" height="17" style="color:#ffffff"><use href="#ic-save"></use></svg>Save
+            </button>
+          </div>
+          <sc-if value="{{ isStatsTab }}">
+            <div style="margin-top:8px; border:1px solid #d9d9d9; border-radius:4px; background:#ffffff; box-shadow:0 1px 2px rgba(0,0,0,.10); padding:18px 22px 26px 22px">
+              <div style="display:flex; align-items:center; gap:24px">
+                <div style="width:340px; flex:0 0 340px; font-size:13.5px; font-weight:700; color:#1f1f1f">Name</div>
+                <input type="text" value="{{ recordName }}" style="height:28px; width:220px; border:1px solid #b5b5b5; border-radius:3px; padding:0 8px; font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#1f1f1f">
+              </div>
+              <div style="display:flex; align-items:center; gap:24px; margin-top:32px">
+                <div style="width:340px; flex:0 0 340px; font-size:13.5px; font-weight:700; color:#1f1f1f">No of Rows</div>
+                <input type="text" value="1" style="height:28px; width:215px; border:1px solid #b5b5b5; border-radius:3px; padding:0 8px; text-align:right; font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#1f1f1f">
+                <div style="flex:0 0 auto; margin-left:60px; font-size:13.5px; font-weight:700; color:#1f1f1f; line-height:1.6; max-width:330px">Number of Time Slices to Define 15 min Intervals in Hourly Sales (60 min = 4, 30 min = 2, 15 min = 1)</div>
+                <input type="text" value="1" style="height:28px; width:215px; border:1px solid #b5b5b5; border-radius:3px; padding:0 8px; text-align:right; font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#1f1f1f">
+                <div style="flex:1"></div>
+                <div style="display:flex; align-items:center; gap:12px">
+                  <div style="width:40px; font-size:13.5px; font-weight:700; color:#1f1f1f; line-height:1.5">Do<br>Not<br>Round</div>
+                  <input type="checkbox" style="width:15px; height:15px">
+                </div>
+              </div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ isMatrixTab }}">
+            <div style="margin-top:8px; border:1px solid #d9d9d9; border-radius:4px; background:#ffffff; box-shadow:0 1px 2px rgba(0,0,0,.10)">
+            <div style="display:flex; align-items:center; padding:10px 12px 8px 12px">
+              <select value="{{ matrixPerPage }}" onChange="{{ onMatrixPerPage }}" style="height:26px; width:74px; border:1px solid #b5b5b5; border-radius:3px; background:#ffffff; font-family:Arial, Helvetica, sans-serif; font-size:13.5px; color:#1f1f1f; padding:0 4px">
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
+              <a href="#" style="margin-left:12px; font-size:14px; color:#1a5c8f">Records per page</a>
+              <div style="flex:1"></div>
+              <span style="font-size:14px; font-weight:700; color:#1f1f1f; margin-right:8px">Search:</span>
+              <span style="position:relative; display:inline-flex; align-items:center">
+                <input type="text" value="{{ matrixSearch }}" onChange="{{ onMatrixSearch }}" style="height:28px; width:212px; border:1px solid #b5b5b5; border-radius:3px; padding:0 30px 0 8px; font-family:Arial, Helvetica, sans-serif; font-size:13.5px; color:#1f1f1f">
+                <svg width="17" height="17" style="position:absolute; right:8px; color:#1f4e79; pointer-events:none"><use href="#ic-search"></use></svg>
+              </span>
+              <button type="button" style="height:30px; margin-left:14px; padding:0 18px; background:#015683; color:#ffffff; border:1px solid #01486e; border-radius:3px; font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:700; cursor:pointer" data-hov="h5">Export</button>
+            </div>
+
+              <div style="padding:0 12px 16px 12px">
+                <div style="display:flex; align-items:center; height:34px; background:#ededee; border:1px solid #d9d9d9">
+                  <div style="flex:1 1 0; text-align:center; font-size:14px; font-weight:700">Index</div>
+                  <div style="width:1px; align-self:stretch; background:#d9d9d9"></div>
+                  <div style="flex:1 1 0; text-align:center; font-size:14px; font-weight:700">&gt;= Start Value</div>
+                  <div style="width:1px; align-self:stretch; background:#d9d9d9"></div>
+                  <div style="flex:1 1 0; text-align:center; font-size:14px; font-weight:700">&lt; End Value</div>
+                  <div style="width:1px; align-self:stretch; background:#d9d9d9"></div>
+                  <div style="flex:1 1 0; text-align:center; font-size:14px; font-weight:700">Total No Of Employee</div>
+                </div>
+                <sc-for list="{{ matrixRows }}" as="m">
+                  <div style="display:flex; align-items:center; height:36px; border-left:1px solid #d9d9d9; border-right:1px solid #d9d9d9; border-bottom:1px solid #d9d9d9">
+                    <div style="flex:1 1 0; padding-left:14px; font-size:14px">{{ m.index }}</div>
+                    <div style="flex:1 1 0; padding-left:14px"><input type="text" value="{{ m.start }}" onChange="{{ m.onStart }}" style="height:22px; width:76px; border:1px solid #b5b5b5; border-radius:2px; text-align:right; padding:0 6px; font-family:Arial, Helvetica, sans-serif; font-size:13px"></div>
+                    <div style="flex:1 1 0; padding-left:14px"><input type="text" value="{{ m.end }}" onChange="{{ m.onEnd }}" style="height:22px; width:76px; border:1px solid #b5b5b5; border-radius:2px; text-align:right; padding:0 6px; font-family:Arial, Helvetica, sans-serif; font-size:13px"></div>
+                    <div style="flex:1 1 0; padding-left:14px"><input type="text" value="{{ m.emp }}" onChange="{{ m.onEmp }}" style="height:22px; width:76px; border:1px solid #b5b5b5; border-radius:2px; text-align:right; padding:0 6px; font-family:Arial, Helvetica, sans-serif; font-size:13px"></div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ isOtherTab }}">
+            <div style="margin-top:8px; border:1px solid #d9d9d9; border-radius:4px; background:#ffffff; box-shadow:0 1px 2px rgba(0,0,0,.10); padding:40px; text-align:center; font-size:14px; color:#6e6e6e">{{ otherTabLabel }}</div>
+          </sc-if>
+        </div>
+      </sc-if>
+    </div>
+
+    <sc-if value="{{ pctOpen }}">
+      <div style="position:absolute; inset:0; background:rgba(15,17,24,.45); z-index:50; display:flex; align-items:flex-start; justify-content:center; padding-top:90px">
+        <div style="width:520px; background:#ffffff; border:1px solid #b9b9b9; border-radius:4px; box-shadow:0 6px 22px rgba(0,0,0,.35)">
+          <div style="display:flex; align-items:center; height:36px; background:#0b0b3b; color:#ffffff; font-size:15px; font-weight:700; padding:0 14px">
+            <span style="flex:1">Update Matrices by Percentage</span>
+            <span onClick="{{ closePct }}" style="cursor:pointer; font-size:17px; font-weight:700">&#215;</span>
+          </div>
+          <div style="padding:18px 18px 8px 18px">
+            <div style="font-size:13.5px; color:#1f1f1f; margin-bottom:16px">{{ pctScopeText }}</div>
+            <div style="display:flex; align-items:center; gap:14px; margin-bottom:14px">
+              <div style="width:150px; flex:0 0 150px; font-size:13.5px; font-weight:700">Adjustment</div>
+              <select value="{{ pctDir }}" onChange="{{ onPctDir }}" style="height:28px; width:130px; border:1px solid #b5b5b5; border-radius:3px; font-family:Arial, Helvetica, sans-serif; font-size:13.5px; padding:0 4px">
+                <option value="inc">Increase</option>
+                <option value="dec">Decrease</option>
+              </select>
+              <input type="text" value="{{ pctValue }}" onChange="{{ onPctValue }}" style="height:28px; width:90px; border:1px solid #b5b5b5; border-radius:3px; text-align:right; padding:0 8px; font-family:Arial, Helvetica, sans-serif; font-size:13.5px">
+              <span style="font-size:13.5px; font-weight:700">%</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:14px; margin-bottom:14px">
+              <div style="width:150px; flex:0 0 150px; font-size:13.5px; font-weight:700">Apply To</div>
+              <select value="{{ pctField }}" onChange="{{ onPctField }}" style="height:28px; width:236px; border:1px solid #b5b5b5; border-radius:3px; font-family:Arial, Helvetica, sans-serif; font-size:13.5px; padding:0 4px">
+                <option value="both">Start &amp; End Values</option>
+                <option value="start">Start Value only</option>
+                <option value="end">End Value only</option>
+                <option value="emp">Total No Of Employee</option>
+              </select>
+            </div>
+            <div style="font-size:12.5px; color:#6e6e6e; line-height:1.5">Cap values (9,999.00) are left unchanged. Employee counts stay whole numbers.</div>
+          </div>
+          <div style="display:flex; justify-content:flex-end; gap:10px; padding:14px 18px 16px 18px; border-top:1px solid #e2e2e2; margin-top:10px">
+            <button type="button" onClick="{{ closePct }}" style="height:30px; padding:0 18px; background:#ffffff; color:#1a5c8f; border:1px solid #cfd6dc; border-radius:3px; font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:700; cursor:pointer">Cancel</button>
+            <button type="button" onClick="{{ applyPct }}" style="{{ applyBtnStyle }}">Apply</button>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- ============ EXPANDED NAV DRAWER ============ -->
+    <div style="{{ drawerStyle }}">
+      <div style="display:flex; align-items:center; gap:14px; height:50px; flex:0 0 50px; padding:0 0 0 15px; background:#292b37">
+        <img src="assets/AltametricsIcon.svg" alt="Altametrics" style="width:30px; height:30px; display:block">
+        <span style="color:#ffffff; font-size:19px; font-weight:700; letter-spacing:.2px">Altametrics</span>
+        <div style="flex:1"></div>
+        <button type="button" onClick="{{ toggleNav }}" title="Collapse menu" style="width:54px; height:50px; flex:0 0 54px; border:none; background:transparent; color:#ffffff; cursor:pointer; display:flex; align-items:center; justify-content:center; padding:0" data-hov="h1">
+          <svg width="22" height="16" viewBox="0 0 24 18" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round"><path d="M1.5 1.5h21M1.5 9h21M1.5 16.5h21"></path></svg>
+        </button>
+      </div>
+      <div style="flex:1; overflow-y:auto; overflow-x:hidden; background:#292b37">
+        <sc-for list="{{ navRows }}" as="row">
+          <button type="button" onClick="{{ row.onClick }}" style="{{ row.style }}">
+            <sc-if value="{{ row.is_home }}"><svg width="24" height="24" style="flex:0 0 24px; margin-right:16px"><use href="#ic-home"></use></svg></sc-if>
+            <sc-if value="{{ row.is_cash }}"><svg width="24" height="24" style="flex:0 0 24px; margin-right:16px"><use href="#ic-cash"></use></svg></sc-if>
+            <sc-if value="{{ row.is_food }}"><svg width="24" height="24" style="flex:0 0 24px; margin-right:16px"><use href="#ic-food"></use></svg></sc-if>
+            <sc-if value="{{ row.is_labor }}"><svg width="24" height="24" style="flex:0 0 24px; margin-right:16px"><use href="#ic-labor"></use></svg></sc-if>
+            <sc-if value="{{ row.is_report }}"><svg width="24" height="24" style="flex:0 0 24px; margin-right:16px"><use href="#ic-report"></use></svg></sc-if>
+            <sc-if value="{{ row.is_admin }}"><svg width="24" height="24" style="flex:0 0 24px; margin-right:16px"><use href="#ic-admin"></use></svg></sc-if>
+            <sc-if value="{{ row.is_help }}"><svg width="24" height="24" style="flex:0 0 24px; margin-right:16px"><use href="#ic-help"></use></svg></sc-if>
+            <span style="flex:1; text-align:left">{{ row.label }}</span>
+            <sc-if value="{{ row.expandable }}">
+              <svg width="15" height="15" style="{{ row.chevronStyle }}"><use href="#ic-chevron"></use></svg>
+            </sc-if>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+</div>
+</template>
+
+<script src="app.js"></script>
+</body>
+</html>

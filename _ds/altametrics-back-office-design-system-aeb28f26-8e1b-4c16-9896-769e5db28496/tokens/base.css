@@ -1,0 +1,31 @@
+/* ============================================================
+   Altametrics Back Office — Base / reset
+   Element defaults that establish the dense enterprise baseline.
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--text-primary);
+  background: var(--surface-app);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--text-link);
+  text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+
+/* Tabular figures for numeric/financial data */
+.ab-num,
+.ab-tabular {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* Negative / parenthesized financial values */
+.ab-negative { color: var(--text-negative); }

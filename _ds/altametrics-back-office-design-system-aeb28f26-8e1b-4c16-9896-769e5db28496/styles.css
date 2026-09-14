@@ -1,0 +1,10 @@
+/* ============================================================
+   Altametrics Back Office — Design System
+   Root stylesheet. Consumers link THIS file only.
+   Keep this file as an @import manifest — no rules inline.
+   ============================================================ */
+@import "tokens/colors.css";
+@import "tokens/typography.css";
+@import "tokens/spacing.css";
+@import "tokens/elevation.css";
+@import "tokens/base.css";

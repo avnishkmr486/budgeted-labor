@@ -1,0 +1,35 @@
+/* ============================================================
+   Altametrics Back Office — Spacing & Layout Tokens
+   Tight, grid-dense enterprise spacing (4px base unit).
+   ============================================================ */
+:root {
+  /* --- Spacing scale (4px base) --- */
+  --space-0:  0;
+  --space-1:  2px;
+  --space-2:  4px;
+  --space-3:  6px;
+  --space-4:  8px;
+  --space-5:  10px;
+  --space-6:  12px;
+  --space-8:  16px;
+  --space-10: 20px;
+  --space-12: 24px;
+  --space-16: 32px;
+  --space-20: 40px;
+
+  /* --- Component sizing --- */
+  --control-h-sm: 26px;
+  --control-h:    32px;   /* inputs, buttons, GO */
+  --control-h-lg: 38px;
+
+  --row-h:        38px;   /* table row */
+  --row-h-dense:  30px;
+
+  /* --- Layout chrome --- */
+  --sidebar-w:        220px;  /* expanded sidebar */
+  --sidebar-w-rail:   54px;   /* collapsed icon rail */
+  --topbar-h:         50px;
+  --module-btn-h:     56px;   /* steel 3D nav buttons */
+  --kpi-card-w:       148px;
+  --content-pad:      16px;
+}
